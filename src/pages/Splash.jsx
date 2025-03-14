@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
-import Footer from '../components/Footer.js'
-import { motion } from "framer-motion";
+import logo from '../assets/images/logo.svg';
+import '../App.css';
+import Footer from '../components/Footer'
 import { useEffect, useRef } from "react";
 
-export default function SplashPage() {
+export default function Splash() {
   const backgroundRef = useRef(null);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export default function SplashPage() {
       <div
         ref={backgroundRef}
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/edinburghSkyline.jpg')" }}
+        style={{ backgroundImage: "url('/edinburghCrowds.jpg')" }}
       ></div>
 
       {/* Dark Overlay */}
@@ -38,18 +37,12 @@ export default function SplashPage() {
 
       {/* Content */}
       <div className="relative z-10 flex-1 flex items-center justify-center text-white text-center p-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-lg"
-        >
-          <h1 className="text-5xl font-bold">Edinburgh Crowds</h1>
-          <p className="mt-4 text-lg text-gray-300">Pedestrian density nowcasting for Edinburgh.</p>
-        </motion.div>
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1 className="text-5xl font-bold">Edinburgh Crowds</h1>
+        <p className="mt-4 text-lg text-gray-300">Pedestrian density nowcasting for Edinburgh.</p>
       </div>
 
       <Footer />
-    </div>    
+    </div>
   );
 }

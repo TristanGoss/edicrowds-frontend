@@ -22,7 +22,7 @@ export default function How() {
             </ul>
           </p>
           <p className="text-lg text-gray-300">
-            After launch, we plan to integrate additional sources covering events that significantly impact Edinburgh, initially including the schedules for Theatres, Concert Halls, Nightclubs and Stadiums.
+            After launch, we plan to integrate additional sources covering events that significantly impact Edinburgh, including the schedules for Theatres, Concert Halls, Nightclubs and Stadiums.
             Edinburgh Crowds does not have access to Edinburgh's CCTV network, nor do we have access to phone trajectory data. We believe that it is possible to produce an accurate nowcast without these invasive and difficult-to-access sources.
           </p> 
           <h1 className="text-4xl font-bold mb-4">Validation and Crowdsourcing</h1>

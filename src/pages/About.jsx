@@ -9,6 +9,7 @@ export default function About() {
           <h1 className="text-4xl font-bold mb-4">About the Author</h1>
           <p className="text-lg text-gray-300">
             Edinburgh Crowds is a solo project intended to act as a portfolio item and a minor income source. The Author's identity will be revealed when the project launches in April 2025.
+            The project will be partially open source, with all open source components released under the GPLv3 licence.
           </p>
         </div>
       </div>

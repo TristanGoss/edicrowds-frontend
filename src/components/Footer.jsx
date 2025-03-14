@@ -7,6 +7,9 @@ export default function Footer() {
           <a href="/privacy" className="hover:text-white">Privacy Policy</a>
           info@edinburghcrowds.co.uk
         </div>
+        <div className="container mx-auto flex flex-col md:flex-row justify-center gap-4">
+        © Edinburgh Crowds 2025
+        </div>
       </footer>
     );
   }
