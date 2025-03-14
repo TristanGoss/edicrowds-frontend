@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import './App.css';
 import Splash from "./pages/Splash";
 import About from "./pages/About";
 import Privacy from "./pages/Privacy";

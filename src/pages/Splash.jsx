@@ -1,5 +1,4 @@
 import logo from '../assets/images/logo.svg';
-import '../App.css';
 import Footer from '../components/Footer'
 import { useEffect, useRef } from "react";
 

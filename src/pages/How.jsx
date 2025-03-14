@@ -13,14 +13,12 @@ export default function How() {
             We use physics-based crowd flow models together with predictive analytics to integrate information from our sources.
           </p>
           <h1 className="text-4xl font-bold mb-4">Sources</h1>
-          <p className="text-lg text-gray-300">
             At launch, our sources will be:
-            <ul>
-              <li><a href="https://uktraffic.live/scotland/edinburgh/">Traffic camera feeds from the Edinburgh Ringroad</a></li>
-              <li><a href="https://www.metoffice.gov.uk/services/data">MetOffice Weather data</a></li>
-              <li><a href="https://edintraveldata.drakewell.com/">The Edintraveldata public Multinode map</a></li>
-            </ul>
-          </p>
+          <ul className="text-lg text-gray-300">
+            <li><a href="https://uktraffic.live/scotland/edinburgh/">Traffic camera feeds from the Edinburgh Ringroad</a></li>
+            <li><a href="https://www.metoffice.gov.uk/services/data">MetOffice Weather data</a></li>
+            <li><a href="https://edintraveldata.drakewell.com/">The Edintraveldata public Multinode map</a></li>
+          </ul>
           <p className="text-lg text-gray-300">
             After launch, we plan to integrate additional sources covering events that significantly impact Edinburgh, including the schedules for Theatres, Concert Halls, Nightclubs and Stadiums.
             Edinburgh Crowds does not have access to Edinburgh's CCTV network, nor do we have access to phone trajectory data. We believe that it is possible to produce an accurate nowcast without these invasive and difficult-to-access sources.
