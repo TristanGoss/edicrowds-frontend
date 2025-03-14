@@ -15,3 +15,45 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@layer components {
+  .page-container {
+    @apply flex flex-col min-h-screen bg-gray-900 text-white;
+  }
+
+  .content-box {
+    @apply flex-1 flex items-center justify-center px-6 py-12 text-center;
+  }
+
+  .text-block {
+    @apply max-w-3xl prose prose-invert text-gray-300 leading-relaxed;
+  }
+
+  .page-title {
+    @apply text-5xl font-bold mb-6
+  }
+
+  .section-title {
+    @apply text-4xl font-bold mt-10 mb-4;
+  }
+
+  .bullet-list {
+    @apply text-lg text-gray-300 leading-relaxed space-y-4 list-outside;
+    max-width: 40rem; /* Limits width for readability */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left; /* Ensures text remains left-aligned */
+  }
+
+  .bullet-item {
+    @apply flex items-start;
+  }
+
+  .bullet-icon {
+    @apply text-blue-400 mr-3 flex-shrink-0;
+  }
+
+  .no-wrap-link {
+    @apply whitespace-nowrap inline-block text-blue-400 hover:underline;
+  }
+}

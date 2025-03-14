@@ -2,40 +2,41 @@ import Footer from "../components/Footer";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+    <div className="page-container">
       {/* Content */}
-      <div className="flex-1 flex items-center justify-center px-6 py-12 text-center">
+      <div className="content-box">
         <div className="max-w-3xl">
-          <h1 className="text-5xl font-bold mb-6">Privacy Policy</h1>
-          <p className="prose prose-invert text-gray-300 max-w-3xl">
+          <h1 className="page-title">Privacy Policy</h1>
+          <p className="text-block">
             In order to protect the privacy of Edinburgh's residents and visitors, <br/>Edinburgh Crowds commits to the following:
           </p>
+          <br/>
 
           {/* Bullet List */}
-          <ul className="mt-6 prose prose-invert text-gray-300 max-w-3xl space-y-4 text-left">
-            <li className="flex items-start">
-              <span className="text-blue-400 mr-3">•</span> 
-              We will never publish or release crowd data covering residential areas of the city.
+          <ul className="bullet-list">
+            <li className="bullet-item">
+              <span className="bullet-icon">•</span> 
+              <span>We will never publish crowd data covering residential areas of the city.</span>
             </li>
-            <li className="flex items-start">
-              <span className="text-blue-400 mr-3">•</span> 
-              We will never handle data that can be attributed to individuals (Personally Identifiable Information, PII), except in the form of user account details.
+            <li className="bullet-item">
+              <span className="bullet-icon">•</span> 
+              <span>We will never handle data that can be attributed to individuals (Personally Identifiable Information, PII), except in the form of user account details.</span>
             </li>
-            <li className="flex items-start">
-              <span className="text-blue-400 mr-3">•</span> 
-              We will never publish data at a finer spatial resolution than per-postcode.
+            <li className="bullet-item">
+              <span className="bullet-icon">•</span> 
+              <span>We will never publish data at a finer spatial resolution than per-postcode.</span>
             </li>
-            <li className="flex items-start">
-              <span className="text-blue-400 mr-3">•</span> 
-              We will never publish data at a finer temporal resolution than per-15-minutes.
+            <li className="bullet-item">
+              <span className="bullet-icon">•</span> 
+              <span>We will never publish data at a finer temporal resolution than per-15-minutes.</span>
             </li>
-            <li className="flex items-start">
-              <span className="text-blue-400 mr-3">•</span> 
-              Visitors to our site will never be asked to consent to cookies unless they create an account.
+            <li className="bullet-item">
+              <span className="bullet-icon">•</span> 
+              <span>Visitors to our site will never be asked to consent to cookies unless they create an account.</span>
             </li>
-            <li className="flex items-start">
-              <span className="text-blue-400 mr-3">•</span> 
-              We will track our website traffic in a manner that is compliant with UK and EU privacy law.
+            <li className="bullet-item">
+              <span className="bullet-icon">•</span> 
+              <span>We will track our website traffic in a manner that is compliant with UK and EU privacy law.</span>
             </li>
           </ul>
         </div>

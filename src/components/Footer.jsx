@@ -10,6 +10,7 @@ export default function Footer() {
           <Link to="/privacy" className="hover:text-white">Privacy Policy</Link>
         </div>
         <div className="container mx-auto flex flex-col md:flex-row justify-center gap-4">
+        <br/>
         info@edinburghcrowds.co.uk<br/>
         © Edinburgh Crowds 2025
         </div>
