@@ -8,7 +8,8 @@ export default function PrivacyPolicy() {
         <div className="max-w-3xl">
           <h1 className="page-title">Privacy Policy</h1>
           <p className="text-block">
-            In order to protect the privacy of Edinburgh's residents and visitors, <br/>Edinburgh Crowds commits to the following:
+            When attempting to nowcast pedestrian density, privacy and transparency are crucial.
+            In order to protect the privacy of Edinburgh's residents and visitors, Edinburgh Crowds commits to the following:
           </p>
           <br/>
 
@@ -16,11 +17,11 @@ export default function PrivacyPolicy() {
           <ul className="bullet-list">
             <li className="bullet-item">
               <span className="bullet-icon">•</span> 
-              <span>We will never publish crowd data covering residential areas of the city.</span>
+              <span>We will never publish data covering residential areas of the city.</span>
             </li>
             <li className="bullet-item">
               <span className="bullet-icon">•</span> 
-              <span>We will never handle data that can be attributed to individuals (Personally Identifiable Information, PII), except in the form of user account details.</span>
+              <span>We will never store data that can be attributed to individuals (Personally Identifiable Information, PII), except in the form of user account details.</span>
             </li>
             <li className="bullet-item">
               <span className="bullet-icon">•</span> 
