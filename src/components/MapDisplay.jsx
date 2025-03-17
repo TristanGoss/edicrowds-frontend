@@ -44,7 +44,7 @@ export default function MapDisplay() {
         <Source
           id="postcodes"
           type="vector"
-          tiles={[`http://tiles.edinburghcrowds.co.uk:8080/maps/edinburgh_postcodes/{z}/{x}/{y}.pbf?nocache=${Date.now()}`]}
+          tiles={[`https://tiles.edinburghcrowds.co.uk/maps/edinburgh_postcodes/{z}/{x}/{y}.pbf?nocache=${Date.now()}`]}
           minzoom={10}
           maxzoom={16}
         >
