@@ -1,0 +1,4 @@
+.maplibregl-ctrl-attrib {
+    bottom: 190px !important;  /* Move attribution above the legend */
+    right: 10px !important;   /* Align attribution with legend */
+  }

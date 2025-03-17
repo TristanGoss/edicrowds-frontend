@@ -1,58 +1,109 @@
-import {Map, Source, Layer} from "react-map-gl/maplibre";
+import { Map, Source, Layer } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
+import "./MapDisplay.css";
+
+function LegendItem({ color, label }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+      <div
+        style={{
+          width: "15px",
+          height: "15px",
+          backgroundColor: color,
+          borderRadius: "3px",
+        }}
+      />
+      <span>{label}</span>
+    </div>
+  );
+}
 
 export default function MapDisplay() {
   const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`;
 
   return (
-    <Map
-      initialViewState={{
-        latitude: 55.95, // Edinburgh
-        longitude: -3.19,
-        zoom: 12,
-        minZoom: 10,
-        maxZoom: 16,
-      }}
-      maxBounds={[
-        [-3.37, 55.87], // Southwest corner (minLng, minLat)
-        [-3.01, 56.01], // Northeast corner (maxLng, maxLat)
-      ]}
-      dragRotate={false}
-      style={{ width: "100%", height: "100vh" }}
-      mapStyle={mapStyle}
-      mapLib={import("maplibre-gl")}
-    >
-      {/* Postcode Tile Source */}
-      <Source
-        id="postcodes"
-        type="vector"
-        tiles={["http://tiles.edinburghcrowds.co.uk:8080/maps/edinburgh_postcodes/{z}/{x}/{y}.pbf"]}
-        minzoom={10}
-        maxzoom={16}
+    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+      <Map
+        initialViewState={{
+          latitude: 55.95, // Edinburgh
+          longitude: -3.19,
+          zoom: 12,
+          minZoom: 10,
+          maxZoom: 16,
+        }}
+        maxBounds={[
+          [-3.37, 55.87], // Southwest corner (minLng, minLat)
+          [-3.01, 56.01], // Northeast corner (maxLng, maxLat)
+        ]}
+        dragRotate={false}
+        style={{ width: "100%", height: "100vh" }}
+        mapStyle={mapStyle}
+        mapLib={import("maplibre-gl")}
       >
-        {/* Postcode Fill Layer */}
-        <Layer
-          id="postcodes-layer"
-          type="fill"
-          source="postcodes"
-          source-layer="postcodes"
-          paint={{
-            "fill-color": "#FF0000",
-            "fill-opacity": 0.5,
-          }}
-        />
-        {/* Postcode Borders */}
-        <Layer
-          id="postcodes-border"
-          type="line"
-          source="postcodes"
-          source-layer="postcodes"
-          paint={{
-            "line-color": "#000000",
-            "line-width": 2,
-          }}
-        />
-      </Source>
-    </Map>
+        {/* Postcode Tile Source */}
+        <Source
+          id="postcodes"
+          type="vector"
+          tiles={[`http://tiles.edinburghcrowds.co.uk:8080/maps/edinburgh_postcodes/{z}/{x}/{y}.pbf?nocache=${Date.now()}`]}
+          minzoom={10}
+          maxzoom={16}
+        >
+          {/* Postcode Fill Layer */}
+          <Layer
+            id="postcodes-layer"
+            type="fill"
+            source="postcodes"
+            source-layer="postcodes"
+            paint={{
+              "fill-color": [
+                "interpolate",
+                ["linear"],
+                ["get", "pedestrian_density_ppsm"],  // Use the new column name
+                0, "#2DC937", // LOS A (≤ 0.3 ppsm) - Free-flow
+                0.3, "#99CC00", // LOS B (0.3 - 0.43 ppsm) - Minor interactions
+                0.43, "#E7B416", // LOS C (0.43 - 0.72 ppsm) - Some restrictions
+                0.72, "#EB801B", // LOS D (0.72 - 1.08 ppsm) - Frequent stops
+                1.08, "#CC3232", // LOS E (1.08 - 1.61 ppsm) - Near capacity
+                1.61, "#660000" // LOS F (> 1.61 ppsm) - Severe congestion
+              ],
+              "fill-opacity": 0.6,  // Adjust transparency for better visibility
+            }}
+          />
+          {/* Postcode Borders */}
+          <Layer
+            id="postcodes-border"
+            type="line"
+            source="postcodes"
+            source-layer="postcodes"
+            paint={{
+              "line-color": "#000000",
+              "line-width": 2,
+            }}
+          />
+        </Source>
+      </Map>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          right: "20px",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
+          padding: "10px",
+          borderRadius: "5px",
+          color: "white",
+          fontSize: "12px",
+        }}
+      >
+        <strong>Pedestrian Crowding</strong>
+        <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+          <LegendItem color="#2DC937" label="Free-flow" />
+          <LegendItem color="#99CC00" label="Minor interactions" />
+          <LegendItem color="#E7B416" label="Some restrictions" />
+          <LegendItem color="#EB801B" label="Frequent stops" />
+          <LegendItem color="#CC3232" label="Near capacity" />
+          <LegendItem color="#660000" label="Severe Congestion" />
+        </div>
+      </div>
+    </div>
   );
 }
