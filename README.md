@@ -7,10 +7,13 @@ Edinburgh Crowds is a dual-use project; it exists both to act as an open-source 
 
 ## Technologies used
 Developed against node v22.14.0
-Hosted on Vercel
+Frontend Hosted on Vercel
 Domain management via names.co.uk
 Email forwarding via ImprovMX
 Mailing list via Google Forms
+Background maps via MapTiler, MapLibre and OpenStreetMap
+Backend database is PostGIS served via Tegola
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
