@@ -26,7 +26,7 @@ code {
   }
 
   .text-block {
-    @apply max-w-3xl prose prose-invert text-gray-300 leading-relaxed;
+    @apply max-w-3xl prose prose-invert text-gray-300 leading-relaxed mb-6;
   }
 
   .page-title {

@@ -5,7 +5,12 @@ This repository contains the frontend for the Edinburgh Crowds project.
 Edinburgh Crowds will provide a web-based nowcast of pedestrian density in Edinburgh.
 Edinburgh Crowds is a dual-use project; it exists both to act as an open-source porfolio and a minor income source for Tristan Goss.
 
+## Technologies used
 Developed against node v22.14.0
+Hosted on Vercel
+Domain management via names.co.uk
+Email forwarding via ImprovMX
+Mailing list via Google Forms
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

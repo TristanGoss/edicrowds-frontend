@@ -3,7 +3,6 @@ import Footer from "../components/Footer";
 export default function PrivacyPolicy() {
   return (
     <div className="page-container">
-      {/* Content */}
       <div className="content-box">
         <div className="max-w-3xl">
           <h1 className="page-title">Privacy Policy</h1>
@@ -13,7 +12,6 @@ export default function PrivacyPolicy() {
           </p>
           <br/>
 
-          {/* Bullet List */}
           <ul className="bullet-list">
             <li className="bullet-item">
               <span className="bullet-icon">•</span> 
@@ -43,7 +41,6 @@ export default function PrivacyPolicy() {
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

@@ -3,7 +3,6 @@ import Footer from "../components/Footer";
 export default function How() {
   return (
     <div className="page-container">
-      {/* Content */}
       <div className="content-box">
         <div className="max-w-3xl">
           <h1 className="page-title">How This Works</h1>
@@ -14,7 +13,6 @@ export default function How() {
             nowcasts and forecasts of pedestrian density within non-residential areas of the city.
           </p>
 
-          {/* Sources Section */}
           <h2 className="section-title">Sources</h2>
           <p className="text-block">
             Our data sources are crucial to the accuracy of our predictions. At launch, our sources will be
@@ -23,17 +21,16 @@ export default function How() {
             {' '}<a href="https://edintraveldata.drakewell.com/" className="no-wrap-link">The Edintraveldata Public Multinode Map</a> and
             {' '}<a href="https://allevents.in/edinburgh/murrayfield%20stadium" className="no-wrap-link">The Murrayfield Stadium Events Schedule</a>.
           </p>
-          <p className="text-block mt-6">
+          <p className="text-block">
             After launch, we plan to integrate additional sources covering events that significantly impact 
             Edinburgh, including the schedules for theatres, concert halls, nightclubs, and other stadiums.
           </p>
-          <p className="text-block mt-6">
+          <p className="text-block">
             Edinburgh Crowds does not have access to Edinburgh's CCTV network or to large scale 
             phone trajectory data. We believe that it is possible to produce an accurate nowcast without 
             these invasive and difficult-to-access sources.
           </p> 
 
-          {/* Validation and Crowdsourcing Section */}
           <h2 className="section-title">Validation And Crowdsourcing</h2>
           <p className="text-block">
             The predictions made by Edinburgh Crowds will be validated against real-world measurements.
@@ -41,7 +38,6 @@ export default function How() {
             Edinburgh's streets. For data protection, these photographs will be processed and discarded, never stored.
             Initially, these photographs will be taken by the Author. Later on in 
             development, we will enable others to provide validation data in the same manner.
-            
           </p>
         </div>
       </div>
