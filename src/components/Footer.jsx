@@ -8,6 +8,7 @@ export default function Footer() {
           <Link to="/about" className="hover:text-white">About</Link>
           <Link to="/how" className="hover:text-white">How this Works</Link>
           <Link to="/privacy" className="hover:text-white">Privacy Policy</Link>
+          <Link to="/preview" className="hover:text-white">Preview</Link>          
         </div>
         <div className="container mx-auto flex flex-col md:flex-row justify-center gap-4">
         <br/>
