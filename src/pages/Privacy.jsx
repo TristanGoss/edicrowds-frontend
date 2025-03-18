@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
           <ul className="bullet-list">
             <li className="bullet-item">
               <span className="bullet-icon">•</span> 
-              <span>We will never publish data covering residential areas of the city.</span>
+              <span>We will never publish data covering primarily residential areas of the city.</span>
             </li>
             <li className="bullet-item">
               <span className="bullet-icon">•</span> 
@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
             </li>
             <li className="bullet-item">
               <span className="bullet-icon">•</span> 
-              <span>We will never publish data at a finer spatial resolution than per-postcode.</span>
+              <span>We will never publish data at a finer spatial resolution than per-census-output-area.</span>
             </li>
             <li className="bullet-item">
               <span className="bullet-icon">•</span> 

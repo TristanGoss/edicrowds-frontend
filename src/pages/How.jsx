@@ -29,7 +29,19 @@ export default function How() {
             Edinburgh Crowds does not have access to Edinburgh's CCTV network or to large scale 
             phone trajectory data. We believe that it is possible to produce an accurate nowcast without 
             these invasive and difficult-to-access sources.
-          </p> 
+          </p>
+
+          <h2 className="section-title">Splitting Up The City</h2>
+          <p className="text-block">
+            There are a great many ways to subdivide the City of Edinburgh. We have opted to use the 2022 National Census Output Areas (OAs).
+            These OAs provide a contiguous, non-overlapping subdivision of Edinburgh into areas of roughly equal population.
+          </p>
+          <p className="text-block">
+            This has the downside of presenting us with a fine subdivision over some densely populated areas that we are not interested in for privacy reasons,
+            and a coarser subdivision over non-residential areas that we are very much interested in (like New Town).
+            To mitigate this, we have discarded a number of exceptionally large OAs, and will reject further OAs based on their zoning rules using other open source datasets.
+            We aim split up some particularly interesting OAs, but this is not high priority within the project.
+          </p>
 
           <h2 className="section-title">Validation And Crowdsourcing</h2>
           <p className="text-block">

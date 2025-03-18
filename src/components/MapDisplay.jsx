@@ -40,20 +40,20 @@ export default function MapDisplay() {
         mapStyle={mapStyle}
         mapLib={import("maplibre-gl")}
       >
-        {/* Postcode Tile Source */}
+        {/* Tile Source */}
         <Source
-          id="postcodes"
+          id="edinburgh_pedestrian_density"
           type="vector"
-          tiles={[`https://tiles.edinburghcrowds.co.uk/maps/edinburgh_postcodes/{z}/{x}/{y}.pbf?nocache=${Date.now()}`]}
+          tiles={[`https://tiles.edinburghcrowds.co.uk/maps/edinburgh_pedestrian_density/{z}/{x}/{y}.pbf?nocache=${Date.now()}`]}
           minzoom={10}
           maxzoom={16}
         >
-          {/* Postcode Fill Layer */}
+          {/* Face fill */}
           <Layer
-            id="postcodes-layer"
+            id="pedestrian-density-fill"
             type="fill"
-            source="postcodes"
-            source-layer="postcodes"
+            source="edinburgh_pedestrian_density"
+            source-layer="edinburgh_pedestrian_density"
             paint={{
               "fill-color": [
                 "interpolate",
@@ -69,12 +69,12 @@ export default function MapDisplay() {
               "fill-opacity": 0.6,  // Adjust transparency for better visibility
             }}
           />
-          {/* Postcode Borders */}
+          {/* Edges */}
           <Layer
-            id="postcodes-border"
+            id="pedestrian-density-border"
             type="line"
-            source="postcodes"
-            source-layer="postcodes"
+            source="edinburgh_pedestrian_density"
+            source-layer="edinburgh_pedestrian_density"
             paint={{
               "line-color": "#000000",
               "line-width": 2,
