@@ -35,12 +35,13 @@ export default function How() {
           <p className="text-block">
             There are a great many ways to subdivide the City of Edinburgh. We have opted to use the 2022 National Census Output Areas (OAs).
             These OAs provide a contiguous, non-overlapping subdivision of Edinburgh into areas of roughly equal population.
-          </p>
-          <p className="text-block">
             This has the downside of presenting us with a fine subdivision over some densely populated areas that we are not interested in for privacy reasons,
             and a coarser subdivision over non-residential areas that we are very much interested in (like New Town).
-            To mitigate this, we have discarded OAs larger than 3.5 square kilometers, and will reject further OAs based on their zoning rules using other open source datasets.
-            We aim split up some particularly interesting OAs, but this is not high priority within the project.
+          </p>
+          <p className="text-block">
+            To mitigate this, we have ignored OAs larger than 3.5 square kilometers and those located in clearly separated commuter towns such as Queensferry.
+            We will ignore further OAs based on their zoning rules using other open source datasets at a later date.
+            We aim to subdivide some particularly interesting OAs, but this is not high priority within the project.
           </p>
 
           <h2 className="section-title">Validation And Crowdsourcing</h2>
