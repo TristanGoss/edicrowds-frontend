@@ -39,7 +39,7 @@ export default function How() {
           <p className="text-block">
             This has the downside of presenting us with a fine subdivision over some densely populated areas that we are not interested in for privacy reasons,
             and a coarser subdivision over non-residential areas that we are very much interested in (like New Town).
-            To mitigate this, we have discarded a number of exceptionally large OAs, and will reject further OAs based on their zoning rules using other open source datasets.
+            To mitigate this, we have discarded OAs larger than 3.5 square kilometers, and will reject further OAs based on their zoning rules using other open source datasets.
             We aim split up some particularly interesting OAs, but this is not high priority within the project.
           </p>
 
