@@ -35,13 +35,20 @@ export default function How() {
           <p className="text-block">
             There are a great many ways to subdivide the City of Edinburgh. We have opted to use the 2022 National Census Output Areas (OAs).
             These OAs provide a contiguous, non-overlapping subdivision of Edinburgh into areas of roughly equal population.
-            This has the downside of presenting us with a fine subdivision over some densely populated areas that we are not interested in for privacy reasons,
-            and a coarser subdivision over non-residential areas that we are very much interested in (like New Town).
           </p>
           <p className="text-block">
-            To mitigate this, we have ignored OAs larger than 3.5 square kilometers and those located in clearly separated commuter towns such as Queensferry.
-            We will ignore further OAs based on their zoning rules using other open source datasets at a later date.
-            We aim to subdivide some particularly interesting OAs, but this is not high priority within the project.
+            Using Census OAs has the downside of presenting us with a fine subdivision over some densely populated areas that we are not
+            interested in for privacy reasons, and a coarser subdivision over non-residential areas that we are very much interested in
+            (like New Town). To mitigate this, we have ignored OAs larger than 3.5 square kilometers and those roughly outside
+            the City of Edinburgh Bypass, resulting in a total of 4,151 OAs considered. We aim to subdivide some particularly interesting
+            OAs, but this is not high priority within the project.
+          </p>
+          <p className="text-block">
+            For privacy reasons, we will not publish nowcasts for residential OAs. We define an OA as residential if, according to OpenStreetMap,
+            it does not contain any shops, restaurants, schools, universities, public buildings, industrial works, offices, hospitals, fire,
+            police or railway stations. We further define any residential OAs that are wholly surrounded by non-residential OAs as non-residential
+            (these tend to be islands of dense population within the centre of town). This results in 2,688 OAs being classed as residential,
+            and the remaining 1,462 OAs within the specified region classed as candidate nowcast regions.
           </p>
 
           <h2 className="section-title">Validation And Crowdsourcing</h2>
