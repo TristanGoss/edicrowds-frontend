@@ -22,7 +22,7 @@ export default function MapDisplay() {
   const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`;
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100vh" }}>
+    <div className="flex-grow relative">
       <Map
         initialViewState={{
           latitude: 55.95, // Edinburgh
@@ -36,7 +36,7 @@ export default function MapDisplay() {
           [-3.01, 56.01], // Northeast corner (maxLng, maxLat)
         ]}
         dragRotate={false}
-        style={{ width: "100%", height: "100vh" }}
+        style={{ width: "100%", height: "100%" }}
         mapStyle={mapStyle}
         mapLib={import("maplibre-gl")}
       >
