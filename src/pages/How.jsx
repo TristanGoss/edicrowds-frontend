@@ -7,7 +7,7 @@ export default function How() {
       <Navbar />
       <div className="content-box">
         <div className="max-w-3xl">
-          <h1 className="page-title">How This Works</h1>
+          <h1 className="page-title">How It Works</h1>
           <p className="text-block">
             Edinburgh Crowds draws upon a range of publicly available and crowdsourced information influencing 
             pedestrian density in Edinburgh. This information is periodically ingested into a data warehouse.
