@@ -51,7 +51,7 @@ export default function MapDisplay() {
       }
 
       const popup = new maplibregl.Popup({ closeOnClick: false })
-        .setLngLat(event.lngLat)
+        .setLngLat([properties.centroid_lon, properties.centroid_lat])
         .setHTML(`
           <strong>OA ${properties.code}</strong>
           <p>Master Postcode: ${properties.masterpc}</p>
