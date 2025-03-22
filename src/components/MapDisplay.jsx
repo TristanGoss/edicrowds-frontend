@@ -1,5 +1,6 @@
-import { useState, useRef, useCallback, useMemo } from "react";
-import { Map, Source, Layer, Popup } from "react-map-gl/maplibre";
+import { useEffect, useRef, useCallback, useMemo } from "react";
+import { Map, Source, Layer } from "react-map-gl/maplibre";
+import maplibregl from 'maplibre-gl';
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapDisplay.css";
 
@@ -22,9 +23,16 @@ function LegendItem({ color, label }) {
 export default function MapDisplay() {
   const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`;
   const mapRef = useRef(null);
+  const popupRef = useRef(null);
 
-  // State for selected OA details
-  const [popupInfo, setPopupInfo] = useState(null);
+  // Clean up popup when component unmounts
+  useEffect(() => {
+    return () => {
+      if (popupRef.current) {
+        popupRef.current.remove();
+      }
+    };
+  }, []);
 
   const handleMapClick = useCallback((event) => {
     if (!mapRef.current) return;
@@ -36,22 +44,26 @@ export default function MapDisplay() {
     });
 
     if (features.length > 0) {
-      const feature = features[0];
+      const properties = features[0].properties;
 
-      setPopupInfo({
-        code: feature.properties.code,
-        masterpc: feature.properties.masterpc,
-        hect: feature.properties.hect,
-        pedestrian_density_ppsm: feature.properties.pedestrian_density_ppsm,
-        lngLat: event.lngLat,
-      });
-    } else {
-      // If clicked outside, reset the state
-      setPopupInfo(null);
+      if (popupRef.current) {
+        popupRef.current.remove();
+      }
+
+      const popup = new maplibregl.Popup({ closeOnClick: false })
+        .setLngLat(event.lngLat)
+        .setHTML(`
+          <strong>OA ${properties.code}</strong>
+          <p>Master Postcode: ${properties.masterpc}</p>
+          <p>Area: ${properties.hect} ha</p>
+          <p>Ped Density: ${Number(properties.pedestrian_density_ppsm).toFixed(2)} ppsm</p>
+        `)
+        .addTo(map);
+
+      popupRef.current = popup;
     }
   }, []);
 
-  // Memoized Map component (prevents re-rendering)
   const memoizedMap = useMemo(() => (
     <Map
       ref={mapRef}
@@ -113,23 +125,6 @@ export default function MapDisplay() {
           }}
         />
       </Source>
-      {/* Popup */}
-      {popupInfo && (
-        <Popup
-          longitude={popupInfo.lngLat.lng}
-          latitude={popupInfo.lngLat.lat}
-          closeOnClick={false}
-          onClose={() => {
-            setPopupInfo(null);
-          }}
-          anchor="top"
-        >
-          <strong>OA {popupInfo.code}</strong>
-          <p>Master Postcode: {popupInfo.masterpc}</p>
-          <p>Area: {popupInfo.hect} ha</p>
-          <p>Ped Density: {popupInfo.pedestrian_density_ppsm.toFixed(2)} ppsm</p>
-        </Popup>
-      )}
       {/* legend */}
       <div
         style={{
@@ -154,7 +149,7 @@ export default function MapDisplay() {
         </div>
       </div>
     </Map>
-  ), [handleMapClick, mapStyle, popupInfo]);
+  ), [handleMapClick, mapStyle]);
 
   return <div className="flex-grow relative">{memoizedMap}</div>;
 }
