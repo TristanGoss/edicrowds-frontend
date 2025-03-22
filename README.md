@@ -14,6 +14,7 @@ Mailing list via Google Forms
 Background maps via MapTiler, MapLibre and OpenStreetMap
 Backend database is PostGIS served via Tegola, both hosted on OVHCloud
 Data preparation using OpenStreetMap and Geopandas
+GDPR-compliant web analytics using Umami Cloud
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
