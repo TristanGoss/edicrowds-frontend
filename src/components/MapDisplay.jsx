@@ -43,12 +43,12 @@ export default function MapDisplay() {
       layers: ["pedestrian-density-fill"], // Must match the Layer ID
     });
 
+    if (popupRef.current) {
+      popupRef.current.remove();
+    }
+
     if (features.length > 0) {
       const properties = features[0].properties;
-
-      if (popupRef.current) {
-        popupRef.current.remove();
-      }
 
       const popup = new maplibregl.Popup({ closeOnClick: false })
         .setLngLat([properties.centroid_lon, properties.centroid_lat])
