@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useMemo } from "react";
+import { useEffect, useRef, useCallback, useMemo, useState } from "react";
 import { Map, Source, Layer } from "react-map-gl/maplibre";
 import { LEVEL_OF_SERVICE_CATEGORIES, levelOfServiceFromPedestrianDensity } from "../utils/levelOfService";
 import maplibregl from 'maplibre-gl';
@@ -26,6 +26,9 @@ export default function MapDisplay() {
   const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`;
   const mapRef = useRef(null);
   const popupRef = useRef(null);
+
+  // for detecting tile server and other map failures
+  const [mapError, setMapError] = useState(null);
 
   // Clean up popup when component unmounts
   useEffect(() => {
@@ -88,6 +91,17 @@ export default function MapDisplay() {
     }
   }, []);
 
+  const handleMapError = useCallback((e) => {
+    const message = e?.error?.message || "";
+    if (message.includes("Failed to fetch")) {
+      setMapError("Failed to fetch pedestrian density. The backend is probably down for maintenance, please try again later.");
+    } else {
+      // case otherwise
+      setMapError("Failed to load the map. This is unexpected, please report this error to info@edinburghcrowds.co.uk.");
+    }
+    console.error(e);
+  }, []);
+
   const memoizedMap = useMemo(() => (
     <Map
       ref={mapRef}
@@ -107,6 +121,7 @@ export default function MapDisplay() {
       mapStyle={mapStyle}
       mapLib={import("maplibre-gl")}
       onClick={handleMapClick}
+      onError={handleMapError}
     >
       {/* Tile Source */}
       <Source
@@ -165,7 +180,15 @@ export default function MapDisplay() {
         </div>
       </div>
     </Map>
-  ), [handleMapClick, mapStyle]);
+  ), [handleMapClick, handleMapError, mapStyle]);
 
-  return <div className="flex-grow relative">{memoizedMap}</div>;
+  return (
+    <div className="flex-grow relative">
+      {memoizedMap}
+      {mapError && (
+        <div className="absolute top-0 left-0 right-0 bg-red-700 text-white text-center py-2 z-50">
+          {mapError}
+        </div>
+      )}
+    </div>);
 }
