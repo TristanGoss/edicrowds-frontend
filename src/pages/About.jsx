@@ -1,8 +1,10 @@
-import Footer from "../components/Footer"; 
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 export default function About() {
   return (
     <div className="page-container">
+      <Navbar />
       <div className="content-box">
         <div className="max-w-3xl">
           <h1 className="page-title">About Edinburgh Crowds</h1>
@@ -38,7 +40,6 @@ export default function About() {
           </p>
         </div>
       </div>
-
       <Footer />
     </div>
   );

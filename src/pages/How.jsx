@@ -1,8 +1,10 @@
 import Footer from "../components/Footer"; 
+import Navbar from "../components/Navbar";
 
 export default function How() {
   return (
     <div className="page-container">
+      <Navbar />
       <div className="content-box">
         <div className="max-w-3xl">
           <h1 className="page-title">How This Works</h1>
@@ -61,8 +63,6 @@ export default function How() {
           </p>
         </div>
       </div>
-
-      {/* Footer */}
       <Footer />
     </div>
   );

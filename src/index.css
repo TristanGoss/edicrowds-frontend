@@ -56,4 +56,41 @@ code {
   .no-wrap-link {
     @apply whitespace-nowrap inline-block text-blue-400 hover:underline;
   }
+
+  .navbar {
+    @apply bg-black bg-opacity-80 text-gray-300 text-center p-2;
+  }
+
+  .navbar-container {
+    @apply max-w-7xl mx-auto px-4 py-0 flex justify-between items-center;
+  }
+
+  .navbar-brand {
+    @apply text-xl font-bold text-gray-300;
+  }
+
+  .internal-link {
+    @apply text-gray-300 hover:text-white;
+  }
+
+  .mobile-menu {
+    @apply lg:hidden px-4 pb-0 space-y-2;
+    transition-property: max-height, opacity;
+  }
+
+  .footer {
+    @apply bg-black bg-opacity-80 text-gray-300 text-center p-2;
+  }
+
+  .footer-links {
+    @apply container mx-auto flex flex-col md:flex-row justify-center gap-4;
+  }
+
+  .menu-toggle-button {
+    @apply lg:hidden text-gray-300 hover:text-white transition-colors;
+  }
+
+  .internal-link-active {
+    @apply text-blue-400 font-medium;
+  }
 }
