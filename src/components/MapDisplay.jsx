@@ -1,8 +1,10 @@
 import { useEffect, useRef, useCallback, useMemo } from "react";
 import { Map, Source, Layer } from "react-map-gl/maplibre";
+import { LEVEL_OF_SERVICE_CATEGORIES, levelOfServiceFromPedestrianDensity } from "../utils/levelOfService";
 import maplibregl from 'maplibre-gl';
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapDisplay.css";
+
 
 function LegendItem({ color, label }) {
   return (
@@ -49,14 +51,36 @@ export default function MapDisplay() {
 
     if (features.length > 0) {
       const properties = features[0].properties;
+      const lng = Number(properties.centroid_lon);
+      const lat = Number(properties.centroid_lat);
+      const pedDensity = Number(properties.pedestrian_density_ppsm);
+      const los = levelOfServiceFromPedestrianDensity(pedDensity);
+
+      // fake up update time as a placeholder
+      const now = new Date();
+      now.setMinutes(0, 0, 0); // round to start of hour
+
+      const timePart = now.toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
+      
+      const datePart = now.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+      });
 
       const popup = new maplibregl.Popup({ closeOnClick: false })
-        .setLngLat([properties.centroid_lon, properties.centroid_lat])
+        .setLngLat([lng, lat])
         .setHTML(`
           <strong>OA ${properties.code}</strong>
+          <p>${timePart}, ${datePart}</p>
           <p>Master Postcode: ${properties.masterpc}</p>
           <p>Area: ${properties.hect} ha</p>
-          <p>Ped Density: ${Number(properties.pedestrian_density_ppsm).toFixed(2)} ppsm</p>
+          <p>Ped. Density: ${pedDensity.toFixed(2)} ppm²</p>
+          <p>Cat ${los.category} (${los.label})</p>
         `)
         .addTo(map);
 
@@ -103,12 +127,7 @@ export default function MapDisplay() {
               "interpolate",
               ["linear"],
               ["get", "pedestrian_density_ppsm"],  // Use the new column name
-              0, "#2DC937", // LOS A (≤ 0.3 ppsm) - Free-flow
-              0.3, "#99CC00", // LOS B (0.3 - 0.43 ppsm) - Minor interactions
-              0.43, "#E7B416", // LOS C (0.43 - 0.72 ppsm) - Some restrictions
-              0.72, "#EB801B", // LOS D (0.72 - 1.08 ppsm) - Frequent stops
-              1.08, "#CC3232", // LOS E (1.08 - 1.61 ppsm) - Near capacity
-              1.61, "#660000" // LOS F (> 1.61 ppsm) - Severe congestion
+              ...LEVEL_OF_SERVICE_CATEGORIES.flatMap((item) => [item.thresholdPPSM, item.colour])
             ],
             "fill-opacity": 0.6,  // Adjust transparency for better visibility
           }}
@@ -140,12 +159,9 @@ export default function MapDisplay() {
       >
         <strong>Pedestrian Crowding</strong>
         <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-          <LegendItem color="#2DC937" label="Free-flow" />
-          <LegendItem color="#99CC00" label="Minor interactions" />
-          <LegendItem color="#E7B416" label="Some restrictions" />
-          <LegendItem color="#EB801B" label="Frequent stops" />
-          <LegendItem color="#CC3232" label="Near capacity" />
-          <LegendItem color="#660000" label="Severe Congestion" />
+          {LEVEL_OF_SERVICE_CATEGORIES.map((item) => (
+            <LegendItem key={item.label} color={item.colour} label={item.label} />
+          ))}
         </div>
       </div>
     </Map>
