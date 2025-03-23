@@ -22,33 +22,10 @@ function LegendItem({ color, label }) {
   );
 }
 
-function applyDefaultStateToNewFeatures(map, seenFeatureIds) {
-  const features = map.querySourceFeatures( 'edinburgh-oas-source', {
-    sourceLayer: 'edinburgh_oas',
-  });
-
-  for (const feature of features) {
-    if (feature.id !== undefined && !seenFeatureIds.has(feature.id)) {
-
-      // fake up update time as a placeholder
-      const mockDateLastUpdated = new Date();
-      mockDateLastUpdated.setMinutes(0, 0, 0); // round to start of hour
-
-      map.setFeatureState(
-        { source: 'edinburgh-oas-source', sourceLayer: 'edinburgh_oas', id: feature.id },
-        { 
-          pedestrianDensityPPSM: 0.1,
-          dateLastUpdatedISO: mockDateLastUpdated.toISOString()
-        }
-      );
-      seenFeatureIds.add(feature.id);
-    }
-  }
-}
 
 function createMapPopup(featureState, featureProperties, map) {
   const los = levelOfServiceFromPedestrianDensity(featureState.pedestrianDensityPPSM);
-  const updated = new Date(featureState.dateLastUpdatedISO);
+  const updated = new Date(featureState.lastUpdatedISO);
 
   const timePart = updated.toLocaleTimeString('en-GB', {
     hour: '2-digit',
@@ -75,25 +52,77 @@ function createMapPopup(featureState, featureProperties, map) {
     .addTo(map);
 }
 
+
+async function fetchNowcastThenApplyToMap(map, nowcastDataRef) {
+  try {
+    const response = await fetch('https://this_url_does_not_exist_yet');
+    if (!response.ok) throw new Error("Failed to fetch nowcast");
+    nowcastDataRef.current = await response.json();
+  } catch (err) {
+    console.warn("Failed to retrieve nowcast, mocking with fake data");
+    const response = await fetch('/mock_nowcast.json');
+    if (!response.ok) throw new Error("Failed to fetch mocked nowcast");
+    nowcastDataRef.current = await response.json();
+  }
+
+  // update the current map view with fresh data
+  applyNowcastToMap(map, nowcastDataRef);
+}
+
+
+function applyNowcastToMap(map, nowcastDataRef) {
+  const features = map.querySourceFeatures('edinburgh-oas-source', {
+    sourceLayer: 'edinburgh_oas',
+  });
+
+  for (const feature of features) {
+    const id = feature.id;
+    if (id === undefined) continue;
+
+    map.setFeatureState(
+      { source: 'edinburgh-oas-source', sourceLayer: 'edinburgh_oas', id },
+      {
+        pedestrianDensityPPSM: nowcastDataRef.current?.[id]?.pedestrianDensityPPSM ?? null,
+        lastUpdatedISO: nowcastDataRef.current?.[id]?.lastUpdatedISO ?? null
+      }
+    );
+  }
+}
+
+
 export default function MapDisplay() {
   const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`;
   const popupRef = useRef(null);
-  const featureIdsWithDefaultsLoaded = useRef(new Set());
+  const nowcastDataRef = useRef(null);
+  const nowcastPollIntervalRef = useRef(null);
 
   // for detecting tile server and other map failures
   const [mapError, setMapError] = useState(null);
 
   function handleMapData(event) {
     const map = event.target;
-    // Ensure tiles are loaded with a default pedestrian density
     if (event.sourceId === 'edinburgh-oas-source' && event.dataType === 'source') {
-      applyDefaultStateToNewFeatures(map, featureIdsWithDefaultsLoaded.current);
+
+      // setup nowcast polling if not already setup
+      if (!nowcastPollIntervalRef.current) {
+        nowcastPollIntervalRef.current = setInterval(() => {
+          fetchNowcastThenApplyToMap(map, nowcastDataRef);
+        }, 900000)
+        // fetch data once immediately
+        fetchNowcastThenApplyToMap(map, nowcastDataRef);
+      }
+
+      // every time a new tile is loaded, ensure its features are updated
+      applyNowcastToMap(map, nowcastDataRef);
     }
   };
 
   function handleMapRemove(event) {
     if (popupRef.current) {
       popupRef.current.remove();
+    }
+    if (nowcastPollIntervalRef.current) {
+      clearInterval(nowcastPollIntervalRef);
     }
   };
 
