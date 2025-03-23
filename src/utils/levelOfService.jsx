@@ -14,6 +14,6 @@ export function levelOfServiceFromPedestrianDensity(pedestrianDensityPPSM) {
         return LEVEL_OF_SERVICE_CATEGORIES[i];
         }
     }
-    return null; // Shouldn’t happen, but just in case
+    return null;
 }
   
