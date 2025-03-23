@@ -22,7 +22,6 @@ export default function Footer() {
           Support The Project
         </a>
         <a href="mailto:info@edinburghcrowds.co.uk" className="internal-link">info@edinburghcrowds.co.uk</a>
-
       </div>
     </footer>
   );
