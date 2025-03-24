@@ -47,10 +47,14 @@ export default function How() {
           </p>
           <p className="text-block">
             For privacy reasons, we will not publish nowcasts for residential OAs. We define an OA as residential if, according to OpenStreetMap,
-            it does not contain any shops, restaurants, schools, universities, public buildings, industrial works, offices, hospitals, fire,
-            police or railway stations. We further define any residential OAs that are wholly surrounded by non-residential OAs as non-residential
-            (these tend to be islands of dense population within the centre of town). This results in 2,688 OAs being classed as residential,
-            and the remaining 1,462 OAs within the specified region classed as candidate nowcast regions.
+            it does not contain any shops, restaurants, nightclubs, bars, pubs, schools, universities, town halls, community centres,
+            industrial works, offices, hospitals, railway stations or tourist destinations.
+          </p>
+          <p className="text-block">
+            We further define any residential OAs that are wholly surrounded
+            by non-residential OAs as non-residential (these tend to be islands of dense population within the centre of town).
+            This results in 2,613 OAs being classed as residential, and the remaining 1,538 OAs within the specified region
+            classed as candidate nowcast regions.
           </p>
 
           <h2 className="section-title">Validation And Crowdsourcing</h2>
