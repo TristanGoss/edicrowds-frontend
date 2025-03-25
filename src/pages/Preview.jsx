@@ -12,8 +12,11 @@ export default function Preview() {
         <div className="max-w-3xl">
           <h1 className="page-title">Preview</h1>
           <p className="text-block">
-            This is an early preview of the Edinburgh Crowds interface. <br /> 
-            Please note that none of the data within this preview is accurate!
+            This is an early preview of the Edinburgh Crowds interface,
+            containing a nowcast for a specific date (13:30 19th March 2025)
+            from an old model iteration. You can click on each Observation Area
+            to get more information about it. The legend includes tooltips that
+            present more information on the colour scheme.
           </p>
         </div>
       </div>

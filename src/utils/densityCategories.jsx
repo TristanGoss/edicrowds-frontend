@@ -2,46 +2,39 @@
 export const PEDESTRIAN_DENSITY_CATEGORIES = [
   {
     lowerThresholdPPSM: 0,
-    upperThresholdPPSM: 0.05,
+    upperThresholdPPSM: 0.03,
     label: "Empty",
-    colour: "#141d2b",
-    description: "Almost no one present. Long stretches between people."
+    colour: "#4aa8ff",
+    description: "Almost no one. Feels deserted. Empty residential streets, industrial zones, or parks in bad weather."
   },
   {
-    lowerThresholdPPSM: 0.05,
-    upperThresholdPPSM: 0.15,
-    label: "Sparse",
-    colour: "#1e3a5f",
-    description: "A few people in view. You won't need to pay attention to them to walk."
+    lowerThresholdPPSM: 0.03,
+    upperThresholdPPSM: 0.1,
+    label: "Quiet",
+    colour: "#3adb76",
+    description: "Quiet but active. Occasional well-spaced out pedestrians. You rarely need to alter your course. Suburban roads or quiet shopping streets."
   },
   {
-    lowerThresholdPPSM: 0.15,
-    upperThresholdPPSM: 0.3,
+    lowerThresholdPPSM: 0.1,
+    upperThresholdPPSM: 0.25,
     midPointPPSM: 0.8,
-    label: "Light",
-    colour: "#1f6f8b",
-    description: "Steady trickle. Awareness of others begins."
+    label: "Busy",
+    colour: "#f7e03c",
+    description: "Genuinely busy. Regular interactions, occasional dodging. Typical of popular streets, small festivals, or busy squares."
   },
   {
-    lowerThresholdPPSM: 0.3,
+    lowerThresholdPPSM: 0.25,
     upperThresholdPPSM: 0.5,
-    label: "Moderate",
-    colour: "#3fb98c",
-    description: "Shared space. Occasional path adjustments."
+    label: "Crowded",
+    colour: "#f95f0f",
+    description: "Movement is constrained. People regularly cross paths, brief blockages happen. A central high street on a midsummer lunchtime."
   },
   {
     lowerThresholdPPSM: 0.5,
-    upperThresholdPPSM: 0.75,
-    label: "Busy",
-    colour: "#f8961e",
-    description: "Movement affected by others. You navigate actively."
-  },
-  {
-    lowerThresholdPPSM: 0.75,
     upperThresholdPPSM: 1,
-    label: "Dense",
-    colour: "#f94144",
-    description: "Regular flow but constrained. Often need to slow/weave."
+    label: "Congested",
+    colour: "#e10600",
+    description: "Freedom of movement is compromised. Feels dense. Typically temporary: festival gates, marches, or major street events."
   },
 ];
 
