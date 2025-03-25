@@ -18,10 +18,8 @@ export default function How() {
           <h2 className="section-title">Sources</h2>
           <p className="text-block">
             Our data sources are crucial to the accuracy of our predictions. At launch, our sources will be
-            {' '}<a href="https://uktraffic.live/scotland/edinburgh/" className="no-wrap-link">Traffic camera feeds from the Edinburgh Ringroad</a>, 
-            {' '}<a href="https://www.metoffice.gov.uk/services/data" className="no-wrap-link">MetOffice Weather Data</a>,
-            {' '}<a href="https://edintraveldata.drakewell.com/" className="no-wrap-link">The Edintraveldata Public Multinode Map</a> and
-            {' '}<a href="https://allevents.in/edinburgh/murrayfield%20stadium" className="no-wrap-link">The Murrayfield Stadium Events Schedule</a>.
+            {' '}<a href="https://www.essentialedinburgh.co.uk/stats/" className="no-wrap-link">The Essential Edinburgh Stats Dashboard</a> and 
+            {' '}<a href="https://edintraveldata.drakewell.com/" className="no-wrap-link">The Edintraveldata Public Multinode Map</a>.
           </p>
           <p className="text-block">
             After launch, we plan to integrate additional sources covering events that significantly impact 
@@ -56,7 +54,6 @@ export default function How() {
             This results in 2,613 OAs being classed as residential, and the remaining 1,538 OAs within the specified region
             classed as candidate nowcast regions.
           </p>
-
           <h2 className="section-title">Validation And Crowdsourcing</h2>
           <p className="text-block">
             The predictions made by Edinburgh Crowds will be validated against real-world measurements.

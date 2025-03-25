@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Map, Source, Layer } from "react-map-gl/maplibre";
-import { LEVEL_OF_SERVICE_CATEGORIES, levelOfServiceFromPedestrianDensity } from "../utils/levelOfService";
+import { categorisePedestrianDensity, PEDESTRIAN_DENSITY_CATEGORIES } from "../utils/densityCategories";
 import maplibregl from 'maplibre-gl';
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapDisplay.css";
@@ -24,7 +24,7 @@ function LegendItem({ color, label }) {
 
 
 function createMapPopup(featureState, featureProperties, map) {
-  const los = levelOfServiceFromPedestrianDensity(featureState.pedestrianDensityPPSM);
+  const category = categorisePedestrianDensity(featureState.pedestrianDensityPPSM);
   const updated = new Date(featureState.lastUpdatedISO);
 
   const timePart = updated.toLocaleTimeString('en-GB', {
@@ -47,7 +47,7 @@ function createMapPopup(featureState, featureProperties, map) {
       <p>Master Postcode: ${featureProperties.masterpc}</p>
       <p>Area: ${featureProperties.hect} ha</p>
       <p>Ped. Density: ${featureState.pedestrianDensityPPSM.toFixed(2)} ppm²</p>
-      <p>Cat ${los.category} (${los.label})</p>
+      <p>(${category.label})</p>
     `)
     .addTo(map);
 }
@@ -212,7 +212,9 @@ export default function MapDisplay() {
                 "interpolate",
                 ["linear"],
                 ["feature-state", "pedestrianDensityPPSM"],  // Use the new column name
-                ...LEVEL_OF_SERVICE_CATEGORIES.flatMap((item) => [item.thresholdPPSM, item.colour])
+                ...PEDESTRIAN_DENSITY_CATEGORIES.flatMap((item) => [
+                  (item.lowerThresholdPPSM + item.upperThresholdPPSM) / 2,
+                  item.colour])
               ],
               "fill-opacity": 0.6,  // Adjust transparency for better visibility
             }}
@@ -242,9 +244,9 @@ export default function MapDisplay() {
             fontSize: "12px",
           }}
         >
-          <strong>Pedestrian Crowding</strong>
+          <strong>Pedestrian Density</strong>
           <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-            {LEVEL_OF_SERVICE_CATEGORIES.map((item) => (
+            {PEDESTRIAN_DENSITY_CATEGORIES.map((item) => (
               <LegendItem key={item.label} color={item.colour} label={item.label} />
             ))}
           </div>
