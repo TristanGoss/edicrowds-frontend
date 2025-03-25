@@ -6,7 +6,8 @@ Edinburgh Crowds will provide a web-based nowcast of pedestrian density in Edinb
 Edinburgh Crowds is a dual-use project; it exists both to act as an open-source porfolio and a minor income source for Tristan Goss.
 
 ## Technologies used
-Developed against node v22.14.0
+Developed against node v22.14.0 as a Vite + React + Typescript project
+linting on pre-commit hooks via Husky
 Frontend Hosted on Vercel
 Domain management via names.co.uk
 Email forwarding via ImprovMX

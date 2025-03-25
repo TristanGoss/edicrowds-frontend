@@ -92,7 +92,7 @@ export async function fetchNowcastThenApplyToMap(map, nowcastDataRef) {
     if (!response.ok) throw new Error("Failed to fetch nowcast");
     nowcastDataRef.current = await response.json();
   } catch (err) {
-    console.warn("Failed to retrieve nowcast, mocking with fake data");
+    console.warn("Failed to retrieve nowcast, mocking with fake data", err);
     const response = await fetch('/mock_nowcast.json');
     if (!response.ok) throw new Error("Failed to fetch mocked nowcast");
     nowcastDataRef.current = await response.json();

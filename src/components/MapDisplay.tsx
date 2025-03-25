@@ -12,7 +12,7 @@ import "./MapDisplay.css";
 
 
 export default function MapDisplay() {
-  const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`;
+  const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${import.meta.env.VITE_MAPTILER_KEY}`;
   const popupRef = useRef(null);
   const nowcastDataRef = useRef(null);
   const nowcastPollIntervalRef = useRef(null);
@@ -38,7 +38,7 @@ export default function MapDisplay() {
     }
   };
 
-  function handleMapRemove(event) {
+  function handleMapRemove(_) {
     if (popupRef.current) {
       popupRef.current.remove();
     }

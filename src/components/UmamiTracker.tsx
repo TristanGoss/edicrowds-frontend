@@ -5,7 +5,7 @@ export default function UmamiTracker() {
     // track visitors for production only
     if (process.env.NODE_ENV !== "production") return;
 
-    const websiteId = process.env.REACT_APP_UMAMI_WEBSITE_ID;
+    const websiteId = import.meta.env.VITE_UMAMI_WEBSITE_ID;
     const umamiUrl = "https://cloud.umami.is/script.js";
 
     if (!websiteId) return;
