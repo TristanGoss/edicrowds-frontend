@@ -139,7 +139,7 @@ export default function MapDisplay() {
         <Source
           id="edinburgh-oas-source"
           type="vector"
-          tiles={[`https://tiles.edinburghcrowds.co.uk/maps/edinburgh_oas/{z}/{x}/{y}.pbf`]}
+          tiles={[`https://backend.edinburghcrowds.co.uk/tiles/maps/edinburgh_oas/{z}/{x}/{y}.pbf`]}
           minzoom={10}
           maxzoom={16}
         >
