@@ -1,28 +1,40 @@
 import { useRef, useState } from "react";
 import { Map, Source, Layer } from "react-map-gl/maplibre";
 import { PEDESTRIAN_DENSITY_CATEGORIES } from "../utils/densityCategories";
+import type {
+  Map as MapLibreMap,
+  ErrorEvent,
+  MapStyleDataEvent,
+  MapSourceDataEvent,
+  MapLibreEvent,
+  MapMouseEvent,
+  Popup, 
+  MapGeoJSONFeature} from 'maplibre-gl';
 import { 
+  FeatureState,
   LegendItem,
+  NowcastDataRef,
   createMapPopup,
   fetchNowcastThenApplyToMap,
   applyNowcastToMap,
-  StyledTooltip } from "../utils/mapDisplayUtils";
+  StyledTooltip, 
+  FeatureProperties } from "../utils/mapDisplayUtils";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapDisplay.css";
 
 
 export default function MapDisplay() {
   const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${import.meta.env.VITE_MAPTILER_KEY}`;
-  const popupRef = useRef(null);
-  const nowcastDataRef = useRef(null);
-  const nowcastPollIntervalRef = useRef(null);
+  const popupRef = useRef<Popup|null>(null);
+  const nowcastDataRef: NowcastDataRef = useRef({});
+  const nowcastPollIntervalRef = useRef<number|null>(null);
 
   // for detecting tile server and other map failures
-  const [mapError, setMapError] = useState(null);
+  const [mapError, setMapError] = useState<string | null>(null);
 
-  function handleMapData(event) {
-    const map = event.target;
-    if (event.sourceId === 'edinburgh-oas-source' && event.dataType === 'source') {
+  function handleMapData(event: MapSourceDataEvent | MapStyleDataEvent) {
+    const map = event.target as MapLibreMap;
+    if (event.dataType === 'source' && event.sourceId === 'edinburgh-oas-source') {
 
       // setup nowcast polling if not already setup
       if (!nowcastPollIntervalRef.current) {
@@ -38,17 +50,17 @@ export default function MapDisplay() {
     }
   };
 
-  function handleMapRemove(_) {
+  function handleMapRemove(_: MapLibreEvent) {
     if (popupRef.current) {
       popupRef.current.remove();
     }
     if (nowcastPollIntervalRef.current) {
-      clearInterval(nowcastPollIntervalRef);
+      clearInterval(nowcastPollIntervalRef.current);
     }
   };
 
-  function handleMapClick(event) {
-    const map = event.target;
+  function handleMapClick(event: MapMouseEvent) {
+    const map = event.target as MapLibreMap;
 
     // Query rendered features at the clicked point
     const features = map.queryRenderedFeatures(event.point, {
@@ -61,26 +73,35 @@ export default function MapDisplay() {
     }
 
     if (features.length > 0) {
-      // Some properties are static, so we get those from the feature properties
-      const properties = features[0].properties;
-      
-      // Pedestrian density is dynamic, so we get that from the feature state instead
+      const thisFeature: MapGeoJSONFeature = features[0]
+
+      // Pedestrian density is dynamic, so we get that from the feature state
       const state = map.getFeatureState({
         source: "edinburgh-oas-source",
         sourceLayer: "edinburgh_oas",
-        id: features[0].id,
-      });
+        id: thisFeature.id,
+      }) as FeatureState;
 
       // Abort if pedestrian density not yet available
       if (!state.pedestrianDensityPPSM) {
         return;
       }
 
-      popupRef.current = createMapPopup(state, properties, map);
+      // Some properties are static, so we get those from the feature properties
+      const props = thisFeature.properties as Record<string, unknown>;
+      const typedProperties: FeatureProperties = {
+        centroid_lon: Number(props.centroid_lon),
+        centroid_lat: Number(props.centroid_lat),
+        code: String(props.code),
+        masterpc: String(props.masterpc),
+        hect: Number(props.hect),
+      };
+
+      popupRef.current = createMapPopup(state, typedProperties, map);
     }
   };
 
-  function handleMapError(e) {
+  function handleMapError(e: ErrorEvent) {
     const message = e?.error?.message || "";
     if (message.includes("Failed to fetch")) {
       setMapError("Failed to fetch pedestrian density. The backend is probably down for maintenance, please try again later.");
@@ -98,9 +119,9 @@ export default function MapDisplay() {
           latitude: 55.95, // Edinburgh
           longitude: -3.19,
           zoom: 12,
-          minZoom: 10,
-          maxZoom: 16,
         }}
+        minZoom={10}
+        maxZoom={16}
         maxBounds={[
           [-3.37, 55.87], // Southwest corner (minLng, minLat)
           [-3.01, 56.01], // Northeast corner (maxLng, maxLat)

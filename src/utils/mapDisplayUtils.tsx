@@ -1,5 +1,7 @@
+import React from 'react';
+import type { RefObject } from 'react';
 import { categorisePedestrianDensity } from "./densityCategories";
-import maplibregl from 'maplibre-gl';
+import { Popup, Map } from 'maplibre-gl';
 import {
   Provider as TooltipProvider,
   Root as TooltipRoot,
@@ -10,7 +12,39 @@ import {
 } from "@radix-ui/react-tooltip";
 
 
-export function StyledTooltip({ children, content }) {
+export interface FeatureState {
+  pedestrianDensityPPSM: number;
+  lastUpdatedISO: string;
+}
+
+
+export type NowcastDataRef = RefObject<
+  Record<number | string, FeatureState | undefined>
+>;
+
+
+export interface FeatureProperties {
+  centroid_lon: number;
+  centroid_lat: number;
+  code: string;
+  masterpc: string;
+  hect: number;
+}
+
+
+interface StyledTooltipProps {
+  children: React.ReactNode;
+  content: React.ReactNode;
+}
+
+
+interface LegendItemProps {
+  color: string;
+  label: string;
+}
+
+
+export function StyledTooltip({ children, content }: StyledTooltipProps) {
   return (
     <TooltipProvider>
       <TooltipRoot>
@@ -39,7 +73,7 @@ export function StyledTooltip({ children, content }) {
   );
 }
 
-export function LegendItem({ color, label }) {
+export function LegendItem({ color, label }: LegendItemProps) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
       <div
@@ -56,9 +90,9 @@ export function LegendItem({ color, label }) {
 }
 
 
-export function createMapPopup(featureState, featureProperties, map) {
+export function createMapPopup(featureState: FeatureState, featureProperties: FeatureProperties, map: Map) {
   const category = categorisePedestrianDensity(featureState.pedestrianDensityPPSM);
-  const updated = new Date(featureState.lastUpdatedISO);
+  const updated: Date = new Date(featureState.lastUpdatedISO);
 
   const timePart = updated.toLocaleTimeString('en-GB', {
     hour: '2-digit',
@@ -72,7 +106,7 @@ export function createMapPopup(featureState, featureProperties, map) {
     year: 'numeric',
   });
 
-  return new maplibregl.Popup({ closeOnClick: false })
+  return new Popup({ closeOnClick: false })
     .setLngLat([featureProperties.centroid_lon, featureProperties.centroid_lat])
     .setHTML(`
       <strong>OA ${featureProperties.code}</strong>
@@ -86,7 +120,7 @@ export function createMapPopup(featureState, featureProperties, map) {
 }
 
 
-export async function fetchNowcastThenApplyToMap(map, nowcastDataRef) {
+export async function fetchNowcastThenApplyToMap(map: Map, nowcastDataRef: NowcastDataRef) {
   try {
     const response = await fetch('https://this_url_does_not_exist_yet');
     if (!response.ok) throw new Error("Failed to fetch nowcast");
@@ -103,7 +137,7 @@ export async function fetchNowcastThenApplyToMap(map, nowcastDataRef) {
 }
 
 
-export function applyNowcastToMap(map, nowcastDataRef) {
+export function applyNowcastToMap(map: Map, nowcastDataRef: NowcastDataRef) {
   const features = map.querySourceFeatures('edinburgh-oas-source', {
     sourceLayer: 'edinburgh_oas',
   });

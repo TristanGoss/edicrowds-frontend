@@ -3,9 +3,9 @@ import { useEffect } from "react";
 export default function UmamiTracker() {
   useEffect(() => {
     // track visitors for production only
-    if (process.env.NODE_ENV !== "production") return;
+    if (import.meta.env.MODE !== "production") return;
 
-    const websiteId = import.meta.env.VITE_UMAMI_WEBSITE_ID;
+    const websiteId: string = import.meta.env.VITE_UMAMI_WEBSITE_ID;
     const umamiUrl = "https://cloud.umami.is/script.js";
 
     if (!websiteId) return;

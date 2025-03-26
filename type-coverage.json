@@ -1,6 +1,0 @@
-{
-    "atLeast": 100,
-    "strict": true,
-    "ignoreCatch": false,
-    "ignoreFiles": ["**/*.test.ts", "**/*.test.tsx"]
-  }

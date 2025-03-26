@@ -1,4 +1,5 @@
 // eslint.config.js
+import globals from 'globals';
 import js from '@eslint/js';
 import * as tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
@@ -13,7 +14,19 @@ export default [
   {
     files: ['src/**/*.{ts,tsx}'],
     ignores: ['dist/**', 'node_modules/**'],
-    ...tseslint.configs.strict[0], // this includes rules + languageOptions
+    languageOptions: {
+      ...tseslint.configs.strict[0].languageOptions,
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.es2020,
+      },
+    },
     plugins: {
       ...tseslint.configs.strict[0].plugins,
       react,
@@ -24,6 +37,7 @@ export default [
     },
     rules: {
       ...tseslint.configs.strict[0].rules,
+      'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'react/prop-types': 'off',
     },

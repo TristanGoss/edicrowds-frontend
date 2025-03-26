@@ -38,11 +38,11 @@ export const PEDESTRIAN_DENSITY_CATEGORIES = [
   },
 ];
 
-export function categorisePedestrianDensity(pedestrianDensityPPSM) {
+export function categorisePedestrianDensity(pedestrianDensityPPSM: number) {
   for (let i = PEDESTRIAN_DENSITY_CATEGORIES.length - 1; i >= 0; i--) {
     if (pedestrianDensityPPSM >= PEDESTRIAN_DENSITY_CATEGORIES[i].lowerThresholdPPSM) {
       return PEDESTRIAN_DENSITY_CATEGORIES[i];
     }
   }
-  return null;
+  return PEDESTRIAN_DENSITY_CATEGORIES[0];
 }

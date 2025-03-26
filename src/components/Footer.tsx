@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
+import type { Location } from 'history';
 
 export default function Footer() {
-  const location = useLocation();
+  const location: Location = useLocation();
   const current = location.pathname;
 
-  const linkClass = (path) =>
+  const linkClass = (path: string) =>
     `internal-link ${current === path ? "internal-link-active" : ""}`;
 
   return (
