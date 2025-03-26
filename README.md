@@ -14,9 +14,40 @@ Edinburgh Crowds is a dual-use project; it exists both to act as an open-source 
 - Mailing list via Google Forms
 - Background maps via MapTiler, MapLibre and OpenStreetMap
 - Observation Area tiles served via Postgres and Tegola, both hosted on OVHCloud
-- Data preparation using OpenStreetMap and Geopandas
+- Data preparation and processing using OpenStreetMap and Geopandas
+- Nowcast engine implemented using FastAPI 
+- Webscrapers implemented using FastAPI and BeautifulSoup 
 - GDPR-compliant web analytics using Umami Cloud
 - Buymeacoffee for micro-donations
+
+## Edinburgh Crowds Architecture
+```mermaid
+graph TD
+
+    DataSource1[/Data Source 1/] --> WebScraper1
+    DataSource2[/Data Source 2/] --> WebScraper2
+    CensusOAs[/National Census Observation Areas/] --> ManualProcessing[Manual Preparation]
+    OpenStreetMap[/OpenStreetMap Overpass API/] --> ManualProcessing[Manual Preparation]
+    ManualProcessing[Manual Processing] -->|Augmented OAs| PostGIS
+
+    subgraph OVHCloud
+        WebScraper1[Web Scraper 1] -->|Standardised Measurements| Engine
+        WebScraper2[Web Scraper 2] -->|Standardised Measurements| Engine
+        PostGIS --> Tegola
+        Tegola -->|Vector Tiles| nginx
+        Engine <--> PostGIS
+        Engine[FastAPI Nowcast Engine] -->|pedestrian densities| nginx
+    end
+
+    subgraph Vercel
+        nginx --> ReactSPA[React SPA]
+    end
+
+    ReactSPA --> User([User])
+
+    classDef manual fill:#fff,stroke:#000,stroke-dasharray: 5 5;
+    class ManualProcessing manual;
+```
 
 ## Getting Started
 
