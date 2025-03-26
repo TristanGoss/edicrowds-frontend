@@ -121,16 +121,9 @@ export function createMapPopup(featureState: FeatureState, featureProperties: Fe
 
 
 export async function fetchNowcastThenApplyToMap(map: Map, nowcastDataRef: NowcastDataRef) {
-  try {
-    const response = await fetch('https://this_url_does_not_exist_yet');
-    if (!response.ok) throw new Error("Failed to fetch nowcast");
-    nowcastDataRef.current = await response.json();
-  } catch (err) {
-    console.warn("Failed to retrieve nowcast, mocking with fake data", err);
-    const response = await fetch('/mock_nowcast.json');
-    if (!response.ok) throw new Error("Failed to fetch mocked nowcast");
-    nowcastDataRef.current = await response.json();
-  }
+  const response = await fetch('https://backend.edinburghcrowds.co.uk/engine/nowcast');
+  if (!response.ok) throw new Error("Failed to fetch nowcast");
+  nowcastDataRef.current = await response.json();
 
   // update the current map view with fresh data
   applyNowcastToMap(map, nowcastDataRef);
