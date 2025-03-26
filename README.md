@@ -24,29 +24,29 @@ Edinburgh Crowds is a dual-use project; it exists both to act as an open-source 
 ```mermaid
 graph TD
 
-    DataSource1[/Data Source 1/] --> WebScraper1
-    DataSource2[/Data Source 2/] --> WebScraper2
-    CensusOAs[/National Census Observation Areas/] --> ManualProcessing[Manual Preparation]
-    OpenStreetMap[/OpenStreetMap Overpass API/] --> ManualProcessing[Manual Preparation]
-    ManualProcessing[Manual Processing] -->|Augmented OAs| PostGIS
+  DataSource1[/Data Source 1/] --> WebScraper1
+  DataSource2[/Data Source 2/] --> WebScraper2
+  CensusOAs[/National Census Observation Areas/] --> OfflineProcessing
+  OpenStreetMap[/OpenStreetMap Overpass API/] --> OfflineProcessing
+  OfflineProcessing[Offline Processing] -->|Augmented OAs| PostGIS
 
-    subgraph OVHCloud
-        WebScraper1[Web Scraper 1] -->|Standardised Measurements| Engine
-        WebScraper2[Web Scraper 2] -->|Standardised Measurements| Engine
-        PostGIS --> Tegola
-        Tegola -->|Vector Tiles| nginx
-        Engine <--> PostGIS
-        Engine[FastAPI Nowcast Engine] -->|pedestrian densities| nginx
-    end
+  subgraph OVHCloud
+    WebScraper1[Web Scraper 1] -->|Standardised Measurements| Engine
+    WebScraper2[Web Scraper 2] -->|Standardised Measurements| Engine
+    PostGIS --> Tegola
+    Tegola -->|Vector Tiles| nginx
+    Engine <--> PostGIS
+    Engine[FastAPI Nowcast Engine] -->|pedestrian densities| nginx
+  end
 
-    subgraph Vercel
-        nginx --> ReactSPA[React SPA]
-    end
+  subgraph Vercel
+    nginx --> ReactSPA[React SPA]
+  end
 
-    ReactSPA --> User([User])
+  ReactSPA --> User([User])
 
-    classDef manual fill:#fff,stroke:#000,stroke-dasharray: 5 5;
-    class ManualProcessing manual;
+  classDef offline fill:#fff,stroke:#000,stroke-dasharray: 5 5;
+  class OfflineProcessing offline;
 ```
 
 ## Getting Started
