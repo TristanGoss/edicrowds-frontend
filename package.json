@@ -11,7 +11,7 @@
     "typecoverage": "type-coverage --strict --at-least 100 --ignore-catch --ignore-files '**/*.test.ts' '**/*.test.tsx'",
     "prune": "ts-prune",
     "precommit": "npm run lint && npm run typecheck && npm run typecoverage && npm run prune",
-    "prepare": "husky install",
+    "postinstall": "husky install",
     "preview": "vite preview"
   },
   "dependencies": {

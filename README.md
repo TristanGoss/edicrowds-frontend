@@ -26,7 +26,7 @@ npm install
 ```
 
 ### Pre-commit Hook (Husky)
-This project uses [Husky](https://typicode.github.io/husky) to run type and lint checks automatically before each commit.
+This project uses [Husky](https://typicode.github.io/husky) to run type and lint checks automatically before each commit. Husky should be automatically setup as a side-effect of running `npm install`.
 
 #### How it works
 When you commit changes (using `git commit`), Husky runs:
@@ -39,11 +39,6 @@ This runs:
 - TypeScript Strict Checking (`npm run typecheck`)
 - Type Coverage CHecking (`npm run typecoverage`)
 - Type Pruning Checks (`npm run prune`)
-
-#### Setup (only needed once after cloning)
-```bash
-npm run setuphusky
-```
 
 ### Start the Development Server
 ```bash
