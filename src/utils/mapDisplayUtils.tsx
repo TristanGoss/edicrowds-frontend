@@ -14,7 +14,7 @@ import {
 
 export interface FeatureState {
   pedestrianDensityPPSM: number;
-  lastUpdatedISO: string;
+  timestampISO: string;
 }
 
 
@@ -92,7 +92,7 @@ export function LegendItem({ color, label }: LegendItemProps) {
 
 export function createMapPopup(featureState: FeatureState, featureProperties: FeatureProperties, map: Map) {
   const category = categorisePedestrianDensity(featureState.pedestrianDensityPPSM);
-  const updated: Date = new Date(featureState.lastUpdatedISO);
+  const updated: Date = new Date(featureState.timestampISO);
 
   const timePart = updated.toLocaleTimeString('en-GB', {
     hour: '2-digit',
@@ -113,7 +113,7 @@ export function createMapPopup(featureState: FeatureState, featureProperties: Fe
       <p>${timePart}, ${datePart}</p>
       <p>Master Postcode: ${featureProperties.masterpc}</p>
       <p>Area: ${featureProperties.hect} ha</p>
-      <p>Ped. Density: ${featureState.pedestrianDensityPPSM.toFixed(2)} ppm²</p>
+      <p>Ped. Density: ${featureState.pedestrianDensityPPSM.toFixed(2)} p/m²</p>
       <p>(${category.label})</p>
     `)
     .addTo(map);
@@ -142,8 +142,8 @@ export function applyNowcastToMap(map: Map, nowcastDataRef: NowcastDataRef) {
     map.setFeatureState(
       { source: 'edinburgh-oas-source', sourceLayer: 'edinburgh_oas', id },
       {
-        pedestrianDensityPPSM: nowcastDataRef.current?.[id]?.pedestrianDensityPPSM ?? null,
-        lastUpdatedISO: nowcastDataRef.current?.[id]?.lastUpdatedISO ?? null
+        pedestrianDensityPPSM: nowcastDataRef.current?.[id] ?? null,
+        timestampISO: nowcastDataRef.current?.timestampISO ?? null
       }
     );
   }

@@ -189,7 +189,13 @@ export default function MapDisplay() {
           <strong>Pedestrian Density</strong>
           <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
             {PEDESTRIAN_DENSITY_CATEGORIES.map((item) => (
-              <StyledTooltip key={item.label} content={item.description}>
+              <StyledTooltip
+                key={item.label}
+                content={
+                  <>
+                    {item.lowerThresholdPPSM} p/m² to {item.upperThresholdPPSM} p/m².<br/> {item.description}
+                  </>
+                }>
                 <span tabIndex={0}>
                   <LegendItem color={item.colour} label={item.label} />
                 </span>
