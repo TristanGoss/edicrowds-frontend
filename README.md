@@ -6,19 +6,30 @@ Edinburgh Crowds is a dual-use project; it exists both to act as an open-source 
 
 ## Tools & Technologies used
 
-- This project was bootstrapped with [Vite](https://vitejs.dev/), using the React + TypeScript template.
+### Frontend
+- Hosted on Vercel
+- Bootstrapped with [Vite](https://vitejs.dev/), using the React + TypeScript template.
 - Linting on pre-commit hooks via Husky, including for 100% type coverage
-- Frontend Hosted on Vercel
+- Background maps via MapTiler, MapLibre and OpenStreetMap
 - Domain management via names.co.uk
 - Email forwarding via ImprovMX
 - Mailing list via Google Forms
-- Background maps via MapTiler, MapLibre and OpenStreetMap
-- Observation Area tiles served via Postgres and Tegola, both hosted on OVHCloud
-- Data preparation and processing using OpenStreetMap and Geopandas
-- Nowcast engine implemented using FastAPI 
-- Webscrapers implemented using FastAPI and BeautifulSoup 
 - GDPR-compliant web analytics using Umami Cloud
 - Buymeacoffee for micro-donations
+
+### Backend
+- Hosted on an Ubuntu VPS on OVHCloud
+- Four separate containers (nginx, Tegola, PostGIS, FastAPI) managed using docker-compose
+- Certbot / letsencrypt for https certificates
+- Augmented Observation Area vector tiles served via Tegola
+- Nowcast predictions generated and served via FastAPI
+- Webscraping via BeautifulSoup
+- Data preparation and processing using OpenStreetMap and Geopandas
+
+### Development environment
+- VSCode on Windows 11
+- Code stored on GitHub
+- Developed entirely on a Dell Inspiron 3482
 
 ## Edinburgh Crowds Architecture
 ```mermaid
