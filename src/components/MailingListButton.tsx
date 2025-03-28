@@ -7,7 +7,7 @@ export default function MailingListButton() {
           href={mailingListGoogleFormUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-3 text-white bg-blue-600 hover:bg-blue-700 rounded-lg text-lg font-semibold transition"
+          className="link-button px-6 py-3 rounded-lg text-lg"
         >
           Join the Mailing List
         </a>

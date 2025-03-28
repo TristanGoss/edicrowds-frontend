@@ -1,22 +1,7 @@
-.maplibregl-ctrl-attrib {
-    bottom: 180px;  /* Move attribution above the legend */
-    right: 10px;   /* Align attribution with legend */
-}
-
 .maplibregl-popup-close-button {
-  right: 6px;
-  top: 0px;
-  font-size: 16px;
-  color: white;
+  @apply right-1.5 top-0 text-base text-white;
 }
 
 .maplibregl-popup-content {
-  background-color: rgba(20, 20, 20, 0.95);
-  color: white;
-  font-size: 14px;
-  padding: 10px;
-  max-width: 250px;
-  border-radius: 6px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  @apply window-over-map max-w-xs border border-white border-opacity-30;
 }

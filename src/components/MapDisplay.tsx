@@ -2,23 +2,24 @@ import { useRef, useState } from "react";
 import { Map, Source, Layer } from "react-map-gl/maplibre";
 import { PEDESTRIAN_DENSITY_CATEGORIES } from "../utils/densityCategories";
 import type {
-  Map as MapLibreMap,
   ErrorEvent,
-  MapStyleDataEvent,
-  MapSourceDataEvent,
+  Map as MapLibreMap,
+  MapGeoJSONFeature,
   MapLibreEvent,
   MapMouseEvent,
-  Popup, 
-  MapGeoJSONFeature} from 'maplibre-gl';
+  MapSourceDataEvent,
+  MapStyleDataEvent,
+  Popup } from 'maplibre-gl';
 import { 
+  BrailleSpinner,
+  FeatureProperties,
   FeatureState,
-  LegendItem,
+  HelpButton,
+  Legend,
   NowcastDataRef,
-  createMapPopup,
-  fetchNowcastThenApplyToMap,
   applyNowcastToMap,
-  StyledTooltip, 
-  FeatureProperties } from "../utils/mapDisplayUtils";
+  createMapPopup,
+  fetchNowcastThenApplyToMap } from "../utils/mapDisplayUtils";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./MapDisplay.css";
 
@@ -32,6 +33,10 @@ export default function MapDisplay() {
   // for detecting tile server and other map failures
   const [mapError, setMapError] = useState<string | null>(null);
 
+  // for detecting data and map loading
+  const [dataLoading, setDataLoading] = useState<boolean>(true);
+  const [mapLoading, setMapLoading] = useState<boolean>(true);
+
   function handleMapData(event: MapSourceDataEvent | MapStyleDataEvent) {
     const map = event.target as MapLibreMap;
     if (event.dataType === 'source' && event.sourceId === 'edinburgh-oas-source') {
@@ -41,8 +46,10 @@ export default function MapDisplay() {
         nowcastPollIntervalRef.current = setInterval(() => {
           fetchNowcastThenApplyToMap(map, nowcastDataRef);
         }, 900000)  // every 15 minutes
-        // fetch data once immediately
-        fetchNowcastThenApplyToMap(map, nowcastDataRef);
+
+        // fetch data once immediately and hide the loading bar only once it has loaded
+        fetchNowcastThenApplyToMap(map, nowcastDataRef).then(
+          () => {setDataLoading(false)});
       }
 
       // every time a new tile is loaded, ensure its features are updated
@@ -83,7 +90,7 @@ export default function MapDisplay() {
       }) as FeatureState;
 
       // Abort if pedestrian density not yet available
-      if (!state.pedestrianDensityPPSM) {
+      if (state.pedestrianDensityPPSM === undefined) {
         return;
       }
 
@@ -115,6 +122,7 @@ export default function MapDisplay() {
   return (
     <div className="flex-grow relative">
       <Map
+        attributionControl={false}
         initialViewState={{
           latitude: 55.95, // Edinburgh
           longitude: -3.19,
@@ -134,6 +142,7 @@ export default function MapDisplay() {
         onError={handleMapError}
         onRemove={handleMapRemove}
         onData={handleMapData}
+        onLoad={() => setMapLoading(false)}
       >
         {/* Tile Source - note that we have disabled caching to ease development */}
         <Source
@@ -173,40 +182,17 @@ export default function MapDisplay() {
             }}
           />
         </Source>
-        {/* legend */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: "20px",
-            right: "20px",
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            padding: "10px",
-            borderRadius: "5px",
-            color: "white",
-            fontSize: "12px",
-          }}
-        >
-          <strong>Pedestrian Density</strong>
-          <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-            {PEDESTRIAN_DENSITY_CATEGORIES.map((item) => (
-              <StyledTooltip
-                key={item.label}
-                content={
-                  <>
-                    {item.lowerThresholdPPSM} p/m² to {item.upperThresholdPPSM} p/m².<br/> {item.description}
-                  </>
-                }>
-                <span tabIndex={0}>
-                  <LegendItem color={item.colour} label={item.label} />
-                </span>
-              </StyledTooltip>
-            ))}
-          </div>
-        </div>
       </Map>
+      <Legend />
+      <HelpButton />
       {mapError && (
-        <div className="absolute top-0 left-0 right-0 bg-red-700 text-white text-center py-2 z-50">
+        <div className="map-error">
           {mapError}
+        </div>
+      )}
+      {(dataLoading || mapLoading) && (
+        <div className="map-loading">
+          <BrailleSpinner /> Loading Nowcast, please wait...
         </div>
       )}
     </div>);

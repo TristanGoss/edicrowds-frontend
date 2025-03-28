@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
 import React from 'react';
 import type { RefObject } from 'react';
-import { categorisePedestrianDensity } from "./densityCategories";
+import { PEDESTRIAN_DENSITY_CATEGORIES, categorisePedestrianDensity } from "./densityCategories";
 import { Popup, Map } from 'maplibre-gl';
 import {
   Provider as TooltipProvider,
@@ -44,6 +45,9 @@ interface LegendItemProps {
 }
 
 
+const BRAILLE_SPINNER_FRAMES = ['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
+
+
 export function StyledTooltip({ children, content }: StyledTooltipProps) {
   return (
     <TooltipProvider>
@@ -53,16 +57,7 @@ export function StyledTooltip({ children, content }: StyledTooltipProps) {
           <TooltipContent
             side="left"
             sideOffset={10}
-            style={{
-              backgroundColor: "#1c1c1c",
-              color: "white",
-              padding: "6px 10px",
-              borderRadius: "4px",
-              fontSize: "12px",
-              maxWidth: "200px",
-              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.3)",
-              zIndex: 999,
-            }}
+            className="window-over-map max-w-xs"
           >
             {content}
             <TooltipArrow fill="#1c1c1c" />
@@ -73,20 +68,41 @@ export function StyledTooltip({ children, content }: StyledTooltipProps) {
   );
 }
 
-export function LegendItem({ color, label }: LegendItemProps) {
+function LegendItem({ color, label }: LegendItemProps) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <div className="flex items-center gap-2">
       <div
-        style={{
-          width: "15px",
-          height: "15px",
-          backgroundColor: color,
-          borderRadius: "3px",
-        }}
+        className="w-4 h-4 rounded-sm"
+        style={{ backgroundColor: color }}
       />
       <span>{label}</span>
     </div>
   );
+}
+
+export function Legend() {
+  return (
+    <>
+      <div className="absolute bottom-5 right-5 window-over-map">
+        <strong>Pedestrian Density</strong>
+        <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+          {PEDESTRIAN_DENSITY_CATEGORIES.map((item) => (
+            <StyledTooltip
+              key={item.label}
+              content={
+                <>
+                  {item.lowerThresholdPPSM} p/m² to {item.upperThresholdPPSM} p/m².<br/> {item.description}
+                </>
+              }>
+              <span tabIndex={0}>
+                <LegendItem color={item.colour} label={item.label} />
+              </span>
+            </StyledTooltip>
+          ))}
+        </div>
+      </div>
+    </>
+  )
 }
 
 
@@ -147,4 +163,64 @@ export function applyNowcastToMap(map: Map, nowcastDataRef: NowcastDataRef) {
       }
     );
   }
+}
+
+
+export function BrailleSpinner() {
+  const [frame, setFrame] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFrame((f) => (f + 1) % BRAILLE_SPINNER_FRAMES.length);
+    }, 80);
+    return () => clearInterval(interval);
+  }, []);
+
+  return <span>{BRAILLE_SPINNER_FRAMES[frame]}</span>;
+}
+
+
+export function HelpButton() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        className="window-over-map hover:bg-blue-700 transition absolute bottom-[200px] right-5"
+        onClick={() => setOpen(true)}
+        title="Help"
+      >
+        <strong>Help</strong>
+      </button>
+
+      {open && (
+        // outer div darkens the display
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="window-over-map max-w-sm w-full">
+            <h2 className="text-lg font-semibold mb-2">Help</h2>
+            <p className="mb-4 text-sm">
+              This map shows the current pedestrian density across the city, produced by fusing together a number of different data sources.
+              You can zoom and drag to explore different areas. The data automatically refreshes every 15 minutes.
+            </p>
+            <p className="mb-4 text-sm">
+              You can click on each Observation Area (each coloured polygon) to get more information about it.
+              The legend includes tooltips that present more information on the colour scale.
+            </p>
+            <hr className="my-2" />
+            <p className="text-xs">
+              {' '}<a href="https://maplibre.org/" className="no-wrap-link" target="_blank">MapLibre</a> | 
+              {' '}<a href="https://maplibre.org/" className="no-wrap-link" target="_blank">© MapTiler</a> | 
+              {' '}<a href="https://maplibre.org/" className="no-wrap-link" target="_blank">© OpenStreetMap contributors</a>
+            </p>
+            <button
+              onClick={() => setOpen(false)}
+              className="link-button mt-4 px-3 py-1 text-sm rounded"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
