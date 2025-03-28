@@ -14,8 +14,8 @@ export default function Preview() {
           <p className="text-block">
             This is an early preview of the Edinburgh Crowds interface,
             containing a live nowcast generated from an old model iteration.
-            You can click on each Observation Area
-            to get more information about it. The legend includes tooltips that
+            If you're the first person to access the page in a while, it can take a few seconds to load. Please be patient!
+            You can click on each Observation Area to get more information about it. The legend includes tooltips that
             present more information on the colour scheme.
           </p>
         </div>
