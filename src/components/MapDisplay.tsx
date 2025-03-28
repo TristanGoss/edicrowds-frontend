@@ -40,7 +40,7 @@ export default function MapDisplay() {
       if (!nowcastPollIntervalRef.current) {
         nowcastPollIntervalRef.current = setInterval(() => {
           fetchNowcastThenApplyToMap(map, nowcastDataRef);
-        }, 900000)
+        }, 900000)  // every 15 minutes
         // fetch data once immediately
         fetchNowcastThenApplyToMap(map, nowcastDataRef);
       }

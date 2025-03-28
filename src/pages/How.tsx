@@ -17,9 +17,11 @@ export default function How() {
 
           <h2 className="section-title">Sources</h2>
           <p className="text-block">
-            Our data sources are crucial to the accuracy of our predictions. At launch, our sources will be
+            Our data sources are crucial to the accuracy of our predictions. They currently include
             {' '}<a href="https://www.essentialedinburgh.co.uk/stats/" className="no-wrap-link">The Essential Edinburgh Stats Dashboard</a> and 
             {' '}<a href="https://edintraveldata.drakewell.com/" className="no-wrap-link">The Edintraveldata Public Multinode Map</a>.
+            We hope to integrate several more before launch, including some video processing for validation
+            and at least one example of integrating the schedule for a major public venue.
           </p>
           <p className="text-block">
             After launch, we plan to integrate additional sources covering events that significantly impact 
@@ -27,7 +29,7 @@ export default function How() {
           </p>
           <p className="text-block">
             Edinburgh Crowds does not have access to Edinburgh's CCTV network or to large scale 
-            phone trajectory data. We believe that it is possible to produce an accurate nowcast without 
+            phone trajectory data. We believe that it is possible to produce a useful nowcast without 
             these invasive and difficult-to-access sources.
           </p>
 

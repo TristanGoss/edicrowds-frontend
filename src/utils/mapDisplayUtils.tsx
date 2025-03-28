@@ -142,7 +142,7 @@ export function applyNowcastToMap(map: Map, nowcastDataRef: NowcastDataRef) {
     map.setFeatureState(
       { source: 'edinburgh-oas-source', sourceLayer: 'edinburgh_oas', id },
       {
-        pedestrianDensityPPSM: nowcastDataRef.current?.[id] ?? null,
+        pedestrianDensityPPSM: nowcastDataRef.current?.[String(id)] ?? null,
         timestampISO: nowcastDataRef.current?.timestampISO ?? null
       }
     );

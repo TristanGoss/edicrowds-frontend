@@ -13,8 +13,8 @@ export default function Preview() {
           <h1 className="page-title">Preview</h1>
           <p className="text-block">
             This is an early preview of the Edinburgh Crowds interface,
-            containing a nowcast for a specific date (13:30 19th March 2025)
-            from an old model iteration. You can click on each Observation Area
+            containing a live nowcast generated from an old model iteration.
+            You can click on each Observation Area
             to get more information about it. The legend includes tooltips that
             present more information on the colour scheme.
           </p>
