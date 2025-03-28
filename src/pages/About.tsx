@@ -16,8 +16,8 @@ export default function About() {
           <p className="text-block">
             The project is partially open source, with all open-source components released under the 
             <span className="font-semibold text-white"> GPLv3 license</span>. The open source components are
-            {' '}<a href="https://github.com/TristanGoss/edicrowds-frontend" className="no-wrap-link">edicrowds-frontend</a>
-            and {' '}<a href="https://github.com/TristanGoss/edicrowds-backend" className="no-wrap-link">edicrowds-backend</a>.
+            {' '}<a href="https://github.com/TristanGoss/edicrowds-frontend" className="no-wrap-link">edicrowds-frontend</a> and 
+            {' '}<a href="https://github.com/TristanGoss/edicrowds-backend" className="no-wrap-link">edicrowds-backend</a>.
             The data warehouse, nowcasting algorithm and possibly some input processors will be closed source.
             The backend repo can still be used without these, but it will return dummy nowcasts.
           </p>
