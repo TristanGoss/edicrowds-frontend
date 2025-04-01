@@ -2,13 +2,11 @@ import { useEffect } from "react";
 
 export default function UmamiTracker() {
   useEffect(() => {
-    // track visitors for production only
-    if (import.meta.env.MODE !== "production") return;
-
     const websiteId: string = import.meta.env.VITE_UMAMI_WEBSITE_ID;
     const umamiUrl = "https://cloud.umami.is/script.js";
 
-    if (!websiteId) return;
+    // track visitors to the live production build only
+    if (!websiteId || window.location.hostname != "www.edinburghcrowds.co.uk") return;
 
     const script = document.createElement("script");
     script.async = true;
