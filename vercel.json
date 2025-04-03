@@ -1,32 +1,13 @@
 {
   "redirects": [
     {
-      "source": "/contact",
-      "destination": "/contact.html",
-      "permanent": false
-    },
-    {
-      "source": "/privacy",
-      "destination": "/privacy.html",
-      "permanent": false
-    },
-    {
-      "source": "/about",
-      "destination": "/about.html",
-      "permanent": false
-    },
-    {
-      "source": "/how",
-      "destination": "/how.html",
-      "permanent": false
-    },
-    {
-      "source": "/terms",
-      "destination": "/terms.html",
-      "permanent": false
-    },
-    {
-      "source": "https://edinburghcrowds.co.uk/:path*",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "edinburghcrowds.co.uk"
+        }
+      ],
       "destination": "https://www.edinburghcrowds.co.uk/:path*",
       "permanent": true
     }
