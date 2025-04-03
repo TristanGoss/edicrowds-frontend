@@ -1,4 +1,31 @@
 {
+  "redirects": [
+    {
+      "source": "/contact",
+      "destination": "/contact.html",
+      "permanent": false
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html",
+      "permanent": false
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html",
+      "permanent": false
+    },
+    {
+      "source": "/how",
+      "destination": "/how.html",
+      "permanent": false
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
