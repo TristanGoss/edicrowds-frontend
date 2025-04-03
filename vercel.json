@@ -24,6 +24,11 @@
       "source": "/terms",
       "destination": "/terms.html",
       "permanent": false
+    },
+    {
+      "source": "https://edinburghcrowds.co.uk/:path*",
+      "destination": "https://www.edinburghcrowds.co.uk/:path*",
+      "permanent": true
     }
   ],
   "rewrites": [

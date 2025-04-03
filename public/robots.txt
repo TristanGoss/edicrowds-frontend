@@ -1,5 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
-
-Sitemap: https://edinburghcrowds.com/sitemap.xml
+Disallow: /preview
+Allow: /
+Sitemap: https://www.edinburghcrowds.co.uk/sitemap.xml
