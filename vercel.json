@@ -1,14 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/(contact|privacy|about|how|terms)",
-      "destination": "/$1.html"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

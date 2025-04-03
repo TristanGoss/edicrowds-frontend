@@ -14,7 +14,7 @@ const pages = [
   { path: '/terms', file: 'terms.html' }
 ];
 
-const outputDir = path.resolve('public');
+const outputDir = path.resolve('dist');
 
 for (const page of pages) {
   const html = renderToString(
