@@ -5,14 +5,18 @@
       "has": [
         {
           "type": "host",
-          "value": "edinburghcrowds.co.uk"
+          "value": "www.edinburghcrowds.co.uk"
         }
       ],
-      "destination": "https://www.edinburghcrowds.co.uk/:path*",
+      "destination": "https://edinburghcrowds.co.uk/:path*",
       "permanent": true
     }
   ],
   "rewrites": [
+    {
+      "source": "/(contact|privacy|about|how|terms)",
+      "destination": "/$1.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
