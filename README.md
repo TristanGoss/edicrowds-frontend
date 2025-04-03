@@ -124,3 +124,12 @@ npm run preview
 - [Vite Documentation](https://vitejs.dev/)
 - [React Documentation](https://react.dev/)
 - [TypeScript Documentation](https://www.typescriptlang.org/)
+
+
+### The infuriating fact that Google does not render client-side javascript before crawling a page.
+Because of this, Google will not index SPA-generated pages!
+One solution to this is to use full SSR with Next.js, but:
+1. A client-side map display means we can never use full SSR.
+2. I don't really like the idea that a frontend needs its own separate backend, that sounds like unnecessary complexity.
+
+So instead of that, what we do is use a script to pre-render some specific pages so that Google can get at them. These pages are imported into `src/AppPagesForPrerender.tsx`, and them from there used during build time by `scripts/prerender.tsx` to build static html pages in `/public`. We then use `vercel.json` to have vercel route direct visits to these pages to their static renders, rather than letting the SPA render them. This fixes Google's view of the site.
