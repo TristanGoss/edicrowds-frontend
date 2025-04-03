@@ -2,6 +2,10 @@
   @apply right-1.5 top-0 text-base text-white;
 }
 
+/* In the below, 
+bg-neutral-900 bg-opacity-95 text-white text-sm p-2.5 rounded-md shadow-md
+needs to match window-over-map from index.css. I can't alias it because
+that breaks the prerendering of some pages in order to allow Google to index them. */
 .maplibregl-popup-content {
-  @apply window-over-map max-w-xs border border-white border-opacity-30;
+  @apply bg-neutral-900 bg-opacity-95 text-white text-sm p-2.5 rounded-md shadow-md max-w-xs border border-white border-opacity-30;
 }

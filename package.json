@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --config vite.config.prerender.ts && node dist/prerender/prerender.js",
     "lint": "eslint src --ext .ts,.tsx --fix",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
     "typecoverage": "type-coverage --strict --at-least 100 --ignore-catch --ignore-files '**/*.test.ts' '**/*.test.tsx'",
