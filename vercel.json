@@ -1,17 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.edinburghcrowds.co.uk"
-        }
-      ],
-      "destination": "https://edinburghcrowds.co.uk/:path*",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     {
       "source": "/(contact|privacy|about|how|terms)",
