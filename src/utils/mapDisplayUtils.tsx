@@ -137,12 +137,38 @@ export function createMapPopup(featureState: FeatureState, featureProperties: Fe
 
 
 export async function fetchNowcastThenApplyToMap(map: Map, nowcastDataRef: NowcastDataRef) {
-  const response = await fetch('https://backend.edinburghcrowds.co.uk/engine/nowcast');
-  if (!response.ok) throw new Error("Failed to fetch nowcast");
-  nowcastDataRef.current = await response.json();
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000); // timeout after 30s
 
-  // update the current map view with fresh data
-  applyNowcastToMap(map, nowcastDataRef);
+  try {
+    const response = await fetch('https://backend.edinburghcrowds.co.uk/engine/nowcast', {
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();  // get body as string
+      throw new Error(`Failed to fetch nowcast: code ${response.status} - ${errorText}`);
+    }
+
+    nowcastDataRef.current = await response.json();
+
+    // update the current map view with fresh data
+    applyNowcastToMap(map, nowcastDataRef);
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      throw new Error('Failed to fetch nowcast: Timed Out after waiting 30s');
+    }
+
+    // Optionally rethrow with additional context
+    if (err instanceof Error) {
+      throw new Error(`Nowcast fetch failed: ${err.message}`);
+    }
+
+    // Final fallback for truly unknown cases
+    throw new Error('Unknown error occurred while fetching nowcast');
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 
