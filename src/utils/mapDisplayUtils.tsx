@@ -156,7 +156,7 @@ export async function fetchNowcastThenApplyToMap(map: Map, nowcastDataRef: Nowca
     applyNowcastToMap(map, nowcastDataRef);
   } catch (err) {
     if (err instanceof DOMException && err.name === 'AbortError') {
-      throw new Error('Failed to fetch nowcast: Timed Out after waiting 30s');
+      throw new Error('Failed to fetch nowcast: Timed Out after waiting 30s. \nEdinburgh Crowds is probably cold-starting, please try again in a few minutes.');
     }
 
     // Optionally rethrow with additional context

@@ -44,12 +44,20 @@ export default function MapDisplay() {
       // setup nowcast polling if not already setup
       if (!nowcastPollIntervalRef.current) {
         nowcastPollIntervalRef.current = setInterval(() => {
-          fetchNowcastThenApplyToMap(map, nowcastDataRef);
+          fetchNowcastThenApplyToMap(map, nowcastDataRef).catch(
+            (err: Error) => {
+              setMapError(err.message);
+              console.error(err.message);
+            });
         }, 900000)  // every 15 minutes
 
         // fetch data once immediately and hide the loading bar only once it has loaded
         fetchNowcastThenApplyToMap(map, nowcastDataRef).then(
-          () => {setDataLoading(false)});
+          () => {setDataLoading(false)}).catch(
+            (err: Error) => {
+              setMapError(err.message);
+              console.error(err.message);
+            });
       }
 
       // every time a new tile is loaded, ensure its features are updated
@@ -109,14 +117,8 @@ export default function MapDisplay() {
   };
 
   function handleMapError(e: ErrorEvent) {
-    const message = e?.error?.message || "";
-    if (message.includes("Failed to fetch")) {
-      setMapError("Failed to fetch pedestrian density. The backend is probably down for maintenance, please try again later.");
-    } else {
-      // case otherwise
-      setMapError("Failed to load the map. This is unexpected, please report this error to info@edinburghcrowds.co.uk.");
-    }
-    console.error(e);
+    setMapError(`Failed to load the map with error ${e.error.message}. \nThis is unexpected, please report this error to info@edinburghcrowds.co.uk.`);
+    console.error(e.error.message);
   };
 
   return (
