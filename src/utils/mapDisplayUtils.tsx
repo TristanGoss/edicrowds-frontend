@@ -138,7 +138,7 @@ export function createMapPopup(featureState: FeatureState, featureProperties: Fe
 
 export async function fetchNowcastThenApplyToMap(map: Map, nowcastDataRef: NowcastDataRef) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 30000); // timeout after 30s
+  const timeout = setTimeout(() => controller.abort(), 60000); // timeout after 60s
 
   try {
     const response = await fetch('https://backend.edinburghcrowds.co.uk/engine/nowcast', {
@@ -156,7 +156,7 @@ export async function fetchNowcastThenApplyToMap(map: Map, nowcastDataRef: Nowca
     applyNowcastToMap(map, nowcastDataRef);
   } catch (err) {
     if (err instanceof DOMException && err.name === 'AbortError') {
-      throw new Error('Failed to fetch nowcast: Timed Out after waiting 30s. \nEdinburgh Crowds is probably cold-starting, please try again in a few minutes.');
+      throw new Error('Failed to fetch nowcast: Timed Out after waiting 60s. Please try again later.');
     }
 
     // Optionally rethrow with additional context

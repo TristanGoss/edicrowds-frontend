@@ -14,9 +14,9 @@ export default function Preview() {
           <p className="text-block">
             This is an early preview of the Edinburgh Crowds interface,
             containing a live nowcast generated from an old model iteration.
-            As we have very few users, nowcasts are currently generated on demand.
-            That means if you're the first person to access the page in a while, it
-            can take a few tens of seconds to load.
+            Nowcasts are continually generated during UK working hours, but
+            If you're the first person to access this page
+            on an evening or weekend, it can take up to 60 seconds to load.
           </p>
         </div>
       </div>

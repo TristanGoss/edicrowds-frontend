@@ -55,6 +55,7 @@ export default function MapDisplay() {
         fetchNowcastThenApplyToMap(map, nowcastDataRef).then(
           () => {setDataLoading(false)}).catch(
             (err: Error) => {
+              setDataLoading(false);
               setMapError(err.message);
               console.error(err.message);
             });
