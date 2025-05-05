@@ -46,6 +46,8 @@ export default function MapDisplay() {
         nowcastPollIntervalRef.current = setInterval(() => {
           fetchNowcastThenApplyToMap(map, nowcastDataRef).catch(
             (err: Error) => {
+              setDataLoading(false);
+              setMapLoading(false);
               setMapError(err.message);
               console.error(err.message);
             });
@@ -56,6 +58,7 @@ export default function MapDisplay() {
           () => {setDataLoading(false)}).catch(
             (err: Error) => {
               setDataLoading(false);
+              setMapLoading(false);
               setMapError(err.message);
               console.error(err.message);
             });
@@ -118,6 +121,8 @@ export default function MapDisplay() {
   };
 
   function handleMapError(e: ErrorEvent) {
+    setDataLoading(false);
+    setMapLoading(false);
     setMapError(`Failed to load the map with error ${e.error.message}. \nThis is unexpected, please report this error to info@edinburghcrowds.co.uk.`);
     console.error(e.error.message);
   };
