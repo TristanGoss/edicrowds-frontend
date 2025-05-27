@@ -8,7 +8,10 @@ export default function BackgroundImage() {
     useEffect(() => {
       const img = new Image();
       img.src = imageUrl;
-      img.onload = () => setImageLoaded(true);
+      img.onload = () => {
+        console.log('Image loaded, calling setImageLoaded(true)');
+        setImageLoaded(true);
+      };
     }, [imageUrl]);
   
     return (

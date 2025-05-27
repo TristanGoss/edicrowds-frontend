@@ -14,8 +14,8 @@ try {
   const summary = JSON.parse(raw);
   const coverage = summary.total.lines.pct;
 
-  if (coverage < 20) {
-    console.error(`\x1b[31m Test line coverage too low: ${coverage}% (expected ≥ 20%) \x1b[0m`);
+  if (coverage < 30) {
+    console.error(`\x1b[31m Test line coverage too low: ${coverage}% (expected ≥ 30%) \x1b[0m`);
     process.exit(1);
   } else {
     console.log(`Test line coverage sufficient: ${coverage}%`);

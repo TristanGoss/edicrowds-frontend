@@ -34,6 +34,7 @@ export default function Navbar() {
       </div>
 
       <div
+        data-testid="navbar-mobile"
         className={`mobile-menu overflow-hidden transition-all duration-500 ease-in-out ${
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
