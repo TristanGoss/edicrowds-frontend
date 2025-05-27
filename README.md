@@ -88,8 +88,9 @@ npm run precommit
 This runs:
 - ESLint (`npm run lint`)
 - TypeScript Strict Checking (`npm run typecheck`)
-- Type Coverage CHecking (`npm run typecoverage`)
+- Type Coverage Checking (`npm run typecoverage`)
 - Type Pruning Checks (`npm run prune`)
+- Unit Tests (`npm run test`)
 
 ### Start the Development Server
 ```bash
