@@ -19,9 +19,7 @@ export interface FeatureState {
 }
 
 
-export type NowcastDataRef = RefObject<
-  Record<number | string, FeatureState | undefined>
->;
+export type NowcastDataRef = RefObject<Record<string, number | string>>;
 
 
 export interface FeatureProperties {
@@ -136,9 +134,9 @@ export function createMapPopup(featureState: FeatureState, featureProperties: Fe
 }
 
 
-export async function fetchNowcastThenApplyToMap(map: Map, nowcastDataRef: NowcastDataRef) {
+export async function fetchNowcastThenApplyToMap(map: Map, nowcastDataRef: NowcastDataRef, timeoutMs: number = 60000) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 60000); // timeout after 60s
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
     const response = await fetch('https://backend.edinburghcrowds.co.uk/engine/nowcast', {

@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Terms from '../../pages/Terms';
+import Privacy from '../../pages/Privacy';
 
 test('renders terms page title', () => {
   render(
     <MemoryRouter>
-      <Terms />
+      <Privacy />
     </MemoryRouter>
   );
-  expect(screen.getAllByText(/Terms of Service/i)[0]).toBeInTheDocument();
+  expect(screen.getAllByText(/Privacy Policy/i)[0]).toBeInTheDocument();
 });

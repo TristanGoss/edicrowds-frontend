@@ -51,7 +51,6 @@ test('toggles mobile menu open/close', () => {
   expect(mobileMenu).toHaveClass('opacity-0');
 });
 
-
 test('highlights current page in navbar', () => {
   renderNavbarAt('/about');
 
