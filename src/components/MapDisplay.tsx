@@ -28,7 +28,7 @@ export default function MapDisplay() {
   const mapStyle = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${import.meta.env.VITE_MAPTILER_KEY}`;
   const popupRef = useRef<Popup|null>(null);
   const nowcastDataRef: NowcastDataRef = useRef({});
-  const nowcastPollIntervalRef = useRef<number|null>(null);
+  const nowcastPollIntervalRef = useRef<ReturnType<typeof setInterval>>(null);
 
   // for detecting tile server and other map failures
   const [mapError, setMapError] = useState<string | null>(null);
